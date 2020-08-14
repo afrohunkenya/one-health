@@ -1,7 +1,7 @@
 <template>
   <div class="container max-w-xs p-8">
     <div class="text-2xl">Sign Up</div>
-    <form action @submit.prevent="saveUser">
+    <form @submit.prevent="saveUser">
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Username</div>
         <input type="text" v-model="username" autocomplete required />
@@ -50,6 +50,9 @@
 
 <script>
 import db from "./firebaseInit";
+import firebase from "firebase/app";
+import "firebase/auth";
+
 export default {
   name: "SignUp",
   data() {
@@ -64,7 +67,16 @@ export default {
     };
   },
   methods: {
+    addEmailAndPassword() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .catch(function(error) {
+          console.log(error.code, error.message);
+        });
+    },
     saveUser() {
+      this.addEmailAndPassword();
       db.collection("users")
         .add({
           email: this.email.toLowerCase(),

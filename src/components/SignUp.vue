@@ -4,19 +4,30 @@
     <form @submit.prevent="saveUser">
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Username</div>
-        <input type="text" v-model="username" autocomplete required />
+        <input type="text" minlength="4" maxlength="20" autocomplete required v-model="username" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Email</div>
-        <input type="email" v-model="email" autocomplete required />
+        <input type="email" autocomplete required v-model="email" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Password</div>
-        <input type="password" v-model="password" autocomplete required />
+        <input
+          type="password"
+          minlength="6"
+          autocomplete
+          required
+          ref="password"
+          v-model="password"
+          @keypress="validatePassword()"
+        />
+        <div
+          v-show="! isPasswordValid"
+        >Password should have 1 lowercase letter, 1 UPPERCASE LETTER, 1 digit and be at least 6 characters long</div>
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Role</div>
-        <select class="mb-2" name="type" v-model="type" required>
+        <select class="mb-2" name="type" required v-model="type">
           <option disabled>Choose your role</option>
           <option value="D">Doctor</option>
           <option value="P">Patient</option>
@@ -25,15 +36,15 @@
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">First Name</div>
-        <input type="text" v-model="firstName" autocomplete required />
+        <input type="text" minlength="2" maxlength="20" autocomplete required v-model="firstName" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Last Name</div>
-        <input type="text" v-model="lastName" autocomplete required />
+        <input type="text" minlength="2" maxlength="20" autocomplete required v-model="lastName" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Surname</div>
-        <input type="text" v-model="surname" autocomplete />
+        <input type="text" minlength="2" maxlength="20" autocomplete v-model="surname" />
       </div>
       <div class="flex flex-row">
         <button class="p-2" type="submit">Submit</button>
@@ -63,10 +74,15 @@ export default {
       password: null,
       surname: null,
       type: null,
-      username: null
+      username: null,
+      isPasswordValid: true,
+      passwordRegex: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}/
     };
   },
   methods: {
+    validatePassword() {
+      this.isPasswordValid = this.passwordRegex.test(this.password);
+    },
     addEmailAndPassword() {
       firebase
         .auth()
@@ -76,22 +92,29 @@ export default {
         });
     },
     saveUser() {
-      this.addEmailAndPassword();
-      db.collection("users")
-        .add({
-          email: this.email.toLowerCase(),
-          firstName: this.firstName,
-          lastName: this.lastName,
-          password: this.password,
-          surname: this.surname,
-          type: this.type,
-          username: this.username
-        })
-        .then(docRef => {
-          docRef;
-          this.$router.push("/");
-        })
-        .catch(err => console.log(err));
+      if (this.passwordRegex.test(this.password)) {
+        this.isPasswordValid = true;
+        this.addEmailAndPassword();
+        db.collection("users")
+          .add({
+            email: this.email.toLowerCase(),
+            firstName: this.firstName,
+            lastName: this.lastName,
+            password: this.password,
+            surname: this.surname,
+            type: this.type,
+            username: this.username
+          })
+          .then(docRef => {
+            docRef;
+            this.$router.push("/");
+          })
+          .catch(err => console.log(err));
+      } else {
+        this.password = "";
+        this.isPasswordValid = false;
+        this.$refs.password.focus();
+      }
     }
   }
 };

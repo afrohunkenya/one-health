@@ -4,11 +4,11 @@
     <form @submit.prevent="logIn">
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Email</div>
-        <input type="email" v-model="email" autocomplete required />
+        <input type="email" autocomplete required v-model="email" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Password</div>
-        <input type="password" v-model="password" autocomplete required />
+        <input type="password" autocomplete required v-model="password" />
       </div>
       <div class="flex flex-row">
         <button class="p-2" type="submit">Submit</button>

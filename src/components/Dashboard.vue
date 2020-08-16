@@ -100,7 +100,7 @@
               </div>
             </div>
           </header>
-          <AppointmentsView/>
+          <AppointmentsView />
         </div>
       </div>
     </div>
@@ -110,22 +110,22 @@
 <script>
 import firebase from "firebase/app";
 import "firebase/auth";
-import AppointmentsView from './AppointmentsView'
+import AppointmentsView from "./AppointmentsView";
 
 export default {
   name: "dashboard",
-  components:{
-    AppointmentsView
+  components: {
+    AppointmentsView,
   },
   data() {
     return {
       email: null,
       sidebarOpen: false,
-      dropdownOpen: false
+      dropdownOpen: false,
     };
   },
   mounted() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         var currentUser = firebase.auth().currentUser;
         if (currentUser != null) {
@@ -142,15 +142,15 @@ export default {
         .auth()
         .signOut()
         .then(
-          function() {
+          function () {
             this.$router.push("/");
           },
-          function(error) {
+          function (error) {
             console.error(error);
           }
         );
-    }
-  }
+    },
+  },
 };
 </script>
 

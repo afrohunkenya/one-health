@@ -94,10 +94,11 @@ export default {
     saveUser() {
       if (this.passwordRegex.test(this.password)) {
         this.isPasswordValid = true;
+        this.email = this.email.toLowerCase();
         this.addEmailAndPassword();
         db.collection("users")
           .add({
-            email: this.email.toLowerCase(),
+            email: this.email,
             firstName: this.firstName,
             lastName: this.lastName,
             password: this.password,

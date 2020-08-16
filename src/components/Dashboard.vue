@@ -18,7 +18,7 @@
               href="#"
               target="_blank"
             >
-              <span class="mx-4">Item 1</span>
+              <span class="mx-4">Appointments</span>
             </a>
             <a
               class="flex items-center mt-4 py-2 px-6 border-l-4 border-green-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
@@ -100,6 +100,7 @@
               </div>
             </div>
           </header>
+          <AppointmentsView/>
         </div>
       </div>
     </div>
@@ -109,9 +110,13 @@
 <script>
 import firebase from "firebase/app";
 import "firebase/auth";
+import AppointmentsView from './AppointmentsView'
 
 export default {
   name: "dashboard",
+  components:{
+    AppointmentsView
+  },
   data() {
     return {
       email: null,

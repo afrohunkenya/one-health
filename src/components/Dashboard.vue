@@ -10,7 +10,7 @@
 
         <div
           :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-          class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-green-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0"
+          class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-green-700 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0"
         >
           <nav class="text-xl">
             <a
@@ -21,7 +21,7 @@
               <span class="mx-4">Appointments</span>
             </a>
             <a
-              class="flex items-center mt-4 py-2 px-6 border-l-4 border-green-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
+              class="flex items-center mt-4 py-2 px-6 border-l-4 border-green-700 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
               href="#"
               target="_blank"
             >

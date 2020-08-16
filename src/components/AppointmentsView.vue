@@ -81,7 +81,7 @@ import firebase from "firebase/app";
 import db from "./firebaseInit";
 
 export default {
-  name: "appointments-view",
+  name: "AppointmentsView",
   data() {
     return {
       appointments: [],

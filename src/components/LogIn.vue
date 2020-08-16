@@ -42,7 +42,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(docRef => {
           docRef;
-          console.log("Logged In");
+          this.$router.push("/dashboard");
         })
         .catch(function(error) {
           console.log(error.code, error.message);

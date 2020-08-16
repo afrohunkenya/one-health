@@ -4,12 +4,19 @@
     <form @submit.prevent="logIn">
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Email</div>
-        <input type="email" autocomplete required v-model="email" />
+        <input type="email" autocomplete required v-model="email" @keyup="isLoginValid = true" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Password</div>
-        <input type="password" autocomplete required v-model="password" />
+        <input
+          type="password"
+          autocomplete
+          required
+          v-model="password"
+          @keyup="isLoginValid = true"
+        />
       </div>
+      <div v-show="! isLoginValid">Invalid Email or Password</div>
       <div class="flex flex-row">
         <button class="p-2" type="submit">Submit</button>
         <router-link to="/">
@@ -32,7 +39,8 @@ export default {
   data() {
     return {
       email: null,
-      password: null
+      password: null,
+      isLoginValid: true
     };
   },
   methods: {
@@ -44,8 +52,10 @@ export default {
           docRef;
           this.$router.push("/dashboard");
         })
-        .catch(function(error) {
-          console.log(error.code, error.message);
+        .catch(error => {
+          if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+            this.isLoginValid = false;
+          }
         });
     }
   }

@@ -53,6 +53,13 @@ export default {
       isLoginValid: true,
     };
   },
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$router.push("/dashboard");
+      }
+    });
+  },
   methods: {
     logIn() {
       firebase

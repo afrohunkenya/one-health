@@ -1,6 +1,6 @@
 <template>
-  <nav class="flex flex-row shadow-md p-2 text-xl justify-around">
-    <router-link to="/">One Health</router-link>
+  <nav class="flex flex-row shadow-md p-2 justify-around">
+    <router-link class="uppercase" to="/">One Health</router-link>
     <router-link to="/login">Log In</router-link>
     <router-link to="/signup">Sign Up</router-link>
     <router-link to="/dashboard">Dashboard</router-link>

@@ -76,7 +76,26 @@
               </button>
 
               <div class="relative">
-                <img class="h-full w-full object-cover" src alt="Avatar" />
+                <button
+                  @click="dropdownOpen = !dropdownOpen"
+                  class="relative z-10 block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none"
+                >
+                  <img class="h-full w-full object-cover" alt="Avatar" />
+                </button>
+
+                <div
+                  v-show="dropdownOpen"
+                  class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20"
+                >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-600 hover:text-white"
+                  >Profile</a>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-600 hover:text-white"
+                  >Logout</a>
+                </div>
               </div>
             </div>
           </header>
@@ -91,7 +110,8 @@ export default {
   name: "dashboard",
   data() {
     return {
-      sidebarOpen: false
+      sidebarOpen: false,
+      dropdownOpen: false
     };
   }
 };

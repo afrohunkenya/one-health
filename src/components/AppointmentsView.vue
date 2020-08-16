@@ -4,7 +4,7 @@
       <div class="my-2 py-2 overflow-x-auto sm:mx-6 sm:px-6 lg:mx-8 lg:px-8">
         <!-- <h4 class="text-gray-600 uppercase">Appointments</h4> -->
         <button
-          class="px-6 py-3 mb-3 float-right bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-teal-500 ml-3 text-sm"
+          class="p-2 mb-4 float-right bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500 ml-3"
         >Add Appointment</button>
         <div
           class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200"

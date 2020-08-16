@@ -47,7 +47,7 @@
         <input type="text" minlength="2" maxlength="20" autocomplete v-model="surname" />
       </div>
       <div class="flex flex-row">
-        <button class="p-2" type="submit">Submit</button>
+        <button class="p-2 bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500 ml-3 text-sm" type="submit">Submit</button>
         <router-link to="/">
           <div class="p-2">Cancel</div>
         </router-link>

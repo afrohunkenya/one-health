@@ -94,6 +94,7 @@
                   <a
                     href="#"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-600 hover:text-white"
+                    @click="logOut()"
                   >Logout</a>
                 </div>
               </div>
@@ -129,6 +130,21 @@ export default {
         this.$router.push("/");
       }
     });
+  },
+  methods: {
+    logOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          function() {
+            this.$router.push("/");
+          },
+          function(error) {
+            console.error(error);
+          }
+        );
+    }
   }
 };
 </script>

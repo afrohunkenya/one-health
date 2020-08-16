@@ -3,7 +3,6 @@
     <router-link class="uppercase" to="/">One Health</router-link>
     <router-link to="/login">Log In</router-link>
     <router-link to="/signup">Sign Up</router-link>
-    <router-link to="/dashboard">Dashboard</router-link>
   </nav>
 </template>
 

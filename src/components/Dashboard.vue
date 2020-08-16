@@ -12,6 +12,9 @@
           :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
           class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-green-700 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0"
         >
+          <div class="text-center mt-4">
+            <router-link class="text-white text-xl uppercase fo" to="/">One Health</router-link>
+          </div>
           <nav class="text-xl">
             <a
               class="flex items-center mt-4 py-2 px-6 border-l-4 bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100"

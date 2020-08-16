@@ -1,61 +1,67 @@
 <template>
-  <div class="container max-w-xs p-8">
-    <div class="text-2xl">Sign Up</div>
-    <form @submit.prevent="saveUser">
-      <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">Username</div>
-        <input type="text" minlength="4" maxlength="20" autocomplete required v-model="username" />
-      </div>
-      <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">Email</div>
-        <input type="email" autocomplete required v-model="email" />
-      </div>
-      <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">Password</div>
-        <input
-          type="password"
-          minlength="6"
-          autocomplete
-          required
-          ref="password"
-          v-model="password"
-          @keypress="validatePassword()"
-        />
-        <div
-          v-show="! isPasswordValid"
-        >Password should have 1 lowercase letter, 1 UPPERCASE LETTER, 1 digit and be at least 6 characters long</div>
-      </div>
-      <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">Role</div>
-        <select class="mb-2" name="type" required v-model="type">
-          <option disabled>Choose your role</option>
-          <option value="D">Doctor</option>
-          <option value="P">Patient</option>
-          <option value="V">Volunteer</option>
-        </select>
-      </div>
-      <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">First Name</div>
-        <input type="text" minlength="2" maxlength="20" autocomplete required v-model="firstName" />
-      </div>
-      <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">Last Name</div>
-        <input type="text" minlength="2" maxlength="20" autocomplete required v-model="lastName" />
-      </div>
-      <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">Surname</div>
-        <input type="text" minlength="2" maxlength="20" autocomplete v-model="surname" />
-      </div>
-      <div class="flex flex-row">
-        <button class="p-2 bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500 ml-3 text-sm" type="submit">Submit</button>
-        <router-link to="/">
-          <div class="p-2">Cancel</div>
+  <div>
+    <NavBar />
+    <div class="container max-w-xs p-8">
+      <div class="text-2xl">Sign Up</div>
+      <form @submit.prevent="saveUser">
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Username</div>
+          <input type="text" minlength="4" maxlength="20" autocomplete required v-model="username" />
+        </div>
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Email</div>
+          <input type="email" autocomplete required v-model="email" />
+        </div>
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Password</div>
+          <input
+            type="password"
+            minlength="6"
+            autocomplete
+            required
+            ref="password"
+            v-model="password"
+            @keypress="validatePassword()"
+          />
+          <div
+            v-show="! isPasswordValid"
+          >Password should have 1 lowercase letter, 1 UPPERCASE LETTER, 1 digit and be at least 6 characters long</div>
+        </div>
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Role</div>
+          <select class="mb-2" name="type" required v-model="type">
+            <option disabled>Choose your role</option>
+            <option value="D">Doctor</option>
+            <option value="P">Patient</option>
+            <option value="V">Volunteer</option>
+          </select>
+        </div>
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">First Name</div>
+          <input type="text" minlength="2" maxlength="20" autocomplete required v-model="firstName" />
+        </div>
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Last Name</div>
+          <input type="text" minlength="2" maxlength="20" autocomplete required v-model="lastName" />
+        </div>
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Surname</div>
+          <input type="text" minlength="2" maxlength="20" autocomplete v-model="surname" />
+        </div>
+        <div class="flex flex-row">
+          <button
+            class="p-2 bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500 ml-3 text-sm"
+            type="submit"
+          >Submit</button>
+          <router-link to="/">
+            <div class="p-2">Cancel</div>
+          </router-link>
+        </div>
+        <router-link to="/login">
+          <div class="p-2">Already have an account?</div>
         </router-link>
-      </div>
-      <router-link to="/login">
-        <div class="p-2">Already have an account?</div>
-      </router-link>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -63,9 +69,13 @@
 import db from "./firebaseInit";
 import firebase from "firebase/app";
 import "firebase/auth";
+import NavBar from "./NavBar";
 
 export default {
   name: "SignUp",
+  components: {
+    NavBar,
+  },
   data() {
     return {
       email: null,

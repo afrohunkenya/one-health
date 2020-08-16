@@ -54,7 +54,7 @@
                 </svg>
               </button>
 
-              <div class="relative mx-4 lg:mx-0">User Dashboard</div>
+              <div class="relative mx-4 lg:mx-0">{{ email }}</div>
             </div>
 
             <div class="flex items-center">
@@ -106,13 +106,29 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
+
 export default {
   name: "dashboard",
   data() {
     return {
+      email: null,
       sidebarOpen: false,
       dropdownOpen: false
     };
+  },
+  mounted() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        var currentUser = firebase.auth().currentUser;
+        if (currentUser != null) {
+          this.email = currentUser.email;
+        }
+      } else {
+        this.$router.push("/");
+      }
+    });
   }
 };
 </script>

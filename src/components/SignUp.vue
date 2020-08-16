@@ -91,6 +91,18 @@ export default {
           console.log(error.code, error.message);
         });
     },
+    logIn() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(docRef => {
+          docRef;
+          this.$router.push("/dashboard");
+        })
+        .catch(function(error) {
+          console.log(error.code, error.message);
+        });
+    },
     saveUser() {
       if (this.passwordRegex.test(this.password)) {
         this.isPasswordValid = true;
@@ -108,7 +120,7 @@ export default {
           })
           .then(docRef => {
             docRef;
-            this.$router.push("/");
+            this.logIn();
           })
           .catch(err => console.log(err));
       } else {

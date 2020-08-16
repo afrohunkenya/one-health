@@ -40,7 +40,7 @@ export default {
     return {
       email: null,
       password: null,
-      isLoginValid: true
+      isLoginValid: true,
     };
   },
   methods: {
@@ -48,17 +48,20 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(docRef => {
+        .then((docRef) => {
           docRef;
           this.$router.push("/dashboard");
         })
-        .catch(error => {
-          if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+        .catch((error) => {
+          if (
+            error.code === "auth/user-not-found" ||
+            error.code === "auth/wrong-password"
+          ) {
             this.isLoginValid = false;
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

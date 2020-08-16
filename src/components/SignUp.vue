@@ -76,7 +76,7 @@ export default {
       type: null,
       username: null,
       isPasswordValid: true,
-      passwordRegex: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}/
+      passwordRegex: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}/,
     };
   },
   methods: {
@@ -87,7 +87,7 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error.code, error.message);
         });
     },
@@ -95,11 +95,11 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(docRef => {
+        .then((docRef) => {
           docRef;
           this.$router.push("/dashboard");
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error.code, error.message);
         });
     },
@@ -116,20 +116,20 @@ export default {
             password: this.password,
             surname: this.surname,
             type: this.type,
-            username: this.username
+            username: this.username,
           })
-          .then(docRef => {
+          .then((docRef) => {
             docRef;
             this.logIn();
           })
-          .catch(err => console.log(err));
+          .catch((err) => console.log(err));
       } else {
         this.password = "";
         this.isPasswordValid = false;
         this.$refs.password.focus();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

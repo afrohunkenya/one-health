@@ -117,9 +117,9 @@ export default {
                   surname: doc.data().surname,
                   lastName: doc.data().lastName,
                 };
+                this.appointments.push(data);
               });
             });
-          this.appointments.push(data);
         });
       });
   },

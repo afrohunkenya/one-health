@@ -34,6 +34,18 @@
         <div class="mb-2">Zoom Password</div>
         <input type="text" minlength="2" autocomplete required v-model="linkPassword" />
       </div>
+      <div class="mb-4 mt-4 p-2">
+        <div class="mb-2">Doctor Notes</div>
+        <textarea
+          name="notes"
+          cols="30"
+          rows="10"
+          maxlength="500"
+          autocomplete
+          required
+          v-model="notes"
+        ></textarea>
+      </div>
       <div class="flex flex-row">
         <button
           class="p-2 bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500 ml-3"
@@ -60,6 +72,7 @@ export default {
       appointmentTime: null,
       linkURL: null,
       linkPassword: null,
+      notes: null,
     };
   },
   methods: {
@@ -96,6 +109,7 @@ export default {
           time: formattedTime,
           linkURL: this.linkURL,
           linkPassword: this.linkPassword,
+          notes: this.notes.trim(),
         })
         .then((docRef) => {
           docRef;
@@ -109,6 +123,7 @@ export default {
 
 <style scoped>
 input,
+textarea,
 select {
   @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
 }

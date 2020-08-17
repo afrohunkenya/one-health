@@ -29,11 +29,15 @@
         </div>
         <div class="mb-4 mt-4 p-2">
           <div class="mb-2">Role</div>
-          <select class="mb-2" name="type" required v-model="type">
+          <select class="mb-2" name="type" required v-model="type" @change="showExtraField()">
             <option disabled>Choose your role</option>
             <option value="D">Doctor</option>
             <option value="P">Patient</option>
           </select>
+        </div>
+        <div class="mb-4 mt-4 p-2" v-if="showDept">
+          <div class="mb-2">Department</div>
+          <input type="text" minlength="2" maxlength="20" autocomplete required v-model="dept" />
         </div>
         <div class="mb-4 mt-4 p-2">
           <div class="mb-2">First Name</div>
@@ -46,6 +50,10 @@
         <div class="mb-4 mt-4 p-2">
           <div class="mb-2">Surname</div>
           <input type="text" minlength="2" maxlength="20" autocomplete v-model="surname" />
+        </div>
+        <div class="mb-4 mt-4 p-2" v-if="showAddress">
+          <div class="mb-2">Address</div>
+          <input type="text" minlength="2" maxlength="30" autocomplete v-model="address" />
         </div>
         <div class="flex flex-row">
           <button
@@ -84,11 +92,24 @@ export default {
       surname: null,
       type: null,
       username: null,
+      dept: null,
+      address: null,
       isPasswordValid: true,
       passwordRegex: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}/,
+      showDept: false,
+      showAddress: false,
     };
   },
   methods: {
+    showExtraField() {
+      if (this.type == "D") {
+        this.showDept = true;
+        this.showAddress = false;
+      } else if (this.type == "P") {
+        this.showDept = false;
+        this.showAddress = true;
+      }
+    },
     validatePassword() {
       this.isPasswordValid = this.passwordRegex.test(this.password);
     },
@@ -117,21 +138,41 @@ export default {
         this.isPasswordValid = true;
         this.email = this.email.toLowerCase();
         this.addEmailAndPassword();
-        db.collection("users")
-          .add({
-            email: this.email,
-            firstName: this.firstName,
-            lastName: this.lastName,
-            password: this.password,
-            surname: this.surname,
-            type: this.type,
-            username: this.username,
-          })
-          .then((docRef) => {
-            docRef;
-            this.logIn();
-          })
-          .catch((err) => console.log(err));
+        if (this.type == "D") {
+          db.collection("users")
+            .add({
+              email: this.email,
+              firstName: this.firstName,
+              lastName: this.lastName,
+              password: this.password,
+              surname: this.surname,
+              type: this.type,
+              username: this.username,
+              doctorDept: this.dept,
+            })
+            .then((docRef) => {
+              docRef;
+              this.logIn();
+            })
+            .catch((err) => console.log(err));
+        } else if (this.type == "P") {
+          db.collection("users")
+            .add({
+              email: this.email,
+              firstName: this.firstName,
+              lastName: this.lastName,
+              password: this.password,
+              surname: this.surname,
+              type: this.type,
+              username: this.username,
+              patientAddress: this.address,
+            })
+            .then((docRef) => {
+              docRef;
+              this.logIn();
+            })
+            .catch((err) => console.log(err));
+        }
       } else {
         this.password = "";
         this.isPasswordValid = false;

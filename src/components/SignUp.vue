@@ -33,7 +33,6 @@
             <option disabled>Choose your role</option>
             <option value="D">Doctor</option>
             <option value="P">Patient</option>
-            <option value="V">Volunteer</option>
           </select>
         </div>
         <div class="mb-4 mt-4 p-2">

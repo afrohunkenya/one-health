@@ -122,7 +122,7 @@ export default {
                   .get()
                   .then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-                      const patientId = doc.data().patientId.id;
+                      const patientId = doc.data().patientId;
                       const data = {
                         time: this.formatTime(doc.data().time),
                         diseases: doc.data().diseases,

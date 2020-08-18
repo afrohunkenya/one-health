@@ -20,15 +20,17 @@
             <input
               class="shadow appearance-none border w-full py-2 px-6 text-gray-700 leading-tight form-input sm:w-64 rounded-md pl-10 pr-4 focus:border-indigo-600"
               type="text"
-              placeholder="Search"
+              placeholder="Search by illness or title"
+              v-model="searchFor"
+              @keypress="searchData()"
             />
           </div>
         </div>
         <div class="mt-8">
           <div class="px-6 w-full mx-0 text-center">
             <div
-              class="px-5 py-6 shadow rounded-md bg-white text-gray-500 hover:text-gray-200 hover:bg-green-500 mb-5 sm:mx-5 "
-              v-for="(portalItem, portalItemIndex) in portalData"
+              class="px-5 py-6 shadow rounded-md bg-white text-gray-500 hover:text-gray-200 hover:bg-green-500 mb-5 sm:mx-5"
+              v-for="(portalItem, portalItemIndex) in listPortalData"
               :key="portalItemIndex"
             >
               <h4 class="text-xl text-gray-800">{{ portalItem.title }}</h4>
@@ -41,7 +43,7 @@
                 v-for="(illness, illnessIndex) in portalItem.illness"
                 :key="illnessIndex"
               >{{ illness }}</span>
-            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -52,6 +54,7 @@
 <script>
 import db from "./firebaseInit";
 import NavBar from "./NavBar";
+import Fuse from "fuse.js";
 
 export default {
   name: "Portal",
@@ -61,7 +64,30 @@ export default {
   data() {
     return {
       portalData: [],
+      listPortalData: [],
+      searchFor: "",
+      fuse: null,
+      options: {
+        keys: ["title", "illness"],
+      },
+      searchResults: [],
     };
+  },
+  methods: {
+    searchData() {
+      if (this.searchFor != "") {
+        this.fuse = new Fuse(this.portalData, this.options);
+        this.searchResults = this.fuse.search(this.searchFor);
+        if (this.searchResults != []) {
+          this.listPortalData = [];
+          this.searchResults.forEach(result => {
+            this.listPortalData.push(result.item)
+          });
+        }
+      } else if (this.searchFor == "") {
+        this.listPortalData = this.portalData;
+      }
+    },
   },
   created() {
     db.collection("portal")
@@ -76,6 +102,7 @@ export default {
             lastName: doc.data().lastName,
           };
           this.portalData.push(data);
+          this.listPortalData = this.portalData;
         });
       });
   },

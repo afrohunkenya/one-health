@@ -25,9 +25,9 @@
           </div>
         </div>
         <div class="mt-8">
-          <div class="px-6 w-full mx-0 mb-5 sm:mx-5 text-center">
+          <div class="px-6 w-full mx-0 text-center">
             <div
-              class="px-5 py-6 shadow rounded-md bg-white text-gray-500 hover:text-gray-200 hover:bg-green-500"
+              class="px-5 py-6 shadow rounded-md bg-white text-gray-500 hover:text-gray-200 hover:bg-green-500 mb-5 sm:mx-5 "
               v-for="(portalItem, portalItemIndex) in portalData"
               :key="portalItemIndex"
             >

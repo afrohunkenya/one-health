@@ -84,6 +84,7 @@
 
 <script>
 import firebase from "firebase/app";
+import "firebase/auth";
 import db from "./firebaseInit";
 
 export default {
@@ -100,34 +101,60 @@ export default {
     },
   },
   created() {
-    db.collection("appointments")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const patientId = doc.data().patientId.id;
-          const data = {
-            time: this.formatTime(doc.data().time),
-            diseases: doc.data().diseases,
-            linkURL: doc.data().linkURL,
-            linkPassword: doc.data().linkPassword,
-            notes: doc.data().notes,
-          };
-
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        var currentUser = firebase.auth().currentUser;
+        // Get id via Auth email
+        if (currentUser != null) {
           db.collection("users")
-            .where(firebase.firestore.FieldPath.documentId(), "==", patientId)
+            .where("email", "==", currentUser.email)
             .get()
             .then((querySnapshot) => {
               querySnapshot.forEach((doc) => {
-                data.patient = {
-                  firstName: doc.data().firstName,
-                  surname: doc.data().surname,
-                  lastName: doc.data().lastName,
+                const data = {
+                  id: doc.id,
                 };
-                this.appointments.push(data);
+                var doctorId = [];
+                doctorId.push(data);
+                //  Filter appointments via id
+                db.collection("appointments")
+                  .where("doctorId", "==", doctorId[0].id)
+                  .get()
+                  .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                      const patientId = doc.data().patientId.id;
+                      const data = {
+                        time: this.formatTime(doc.data().time),
+                        diseases: doc.data().diseases,
+                        linkURL: doc.data().linkURL,
+                        linkPassword: doc.data().linkPassword,
+                        notes: doc.data().notes,
+                      };
+
+                      db.collection("users")
+                        .where(
+                          firebase.firestore.FieldPath.documentId(),
+                          "==",
+                          patientId
+                        )
+                        .get()
+                        .then((querySnapshot) => {
+                          querySnapshot.forEach((doc) => {
+                            data.patient = {
+                              firstName: doc.data().firstName,
+                              surname: doc.data().surname,
+                              lastName: doc.data().lastName,
+                            };
+                            this.appointments.push(data);
+                          });
+                        });
+                    });
+                  });
               });
             });
-        });
-      });
+        }
+      }
+    });
   },
 };
 </script>

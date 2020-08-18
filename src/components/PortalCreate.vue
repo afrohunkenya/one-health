@@ -12,9 +12,9 @@
           <input type="text" minlength="4" maxlength="60" autocomplete required v-model="desc" />
         </div>
         <div class="mb-4 mt-4 p-2">
-          <div>Ailments</div>
+          <div>Illness</div>
           <div class="mb-2 text-gray-600 text-sm">Use commas to separate each</div>
-          <input type="text" maxlength="40" autocomplete required v-model="ailments" />
+          <input type="text" maxlength="40" autocomplete required v-model="illness" />
         </div>
         <div class="mb-4 mt-4 p-2">
           <div class="mb-2">Body</div>
@@ -46,7 +46,7 @@ export default {
       title: null,
       desc: null,
       body: null,
-      ailments: null,
+      illness: null,
     };
   },
   methods: {
@@ -73,7 +73,7 @@ export default {
                     .add({
                       title: this.title,
                       desc: this.desc,
-                      ailments: this.ailments.split(","),
+                      illness: this.illness.split(","),
                       doctorId: doctorData[0].id,
                       firstName: doctorData[0].firstName,
                       lastName: doctorData[0].lastName,

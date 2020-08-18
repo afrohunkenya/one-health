@@ -38,9 +38,9 @@
               >by {{ portalItem.firstName + " " +portalItem.lastName }}</div>
               <span
                 class="px-2 mr-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                v-for="(ailment, ailmentIndex) in portalItem.ailments"
-                :key="ailmentIndex"
-              >{{ ailment }}</span>
+                v-for="(illness, illnessIndex) in portalItem.illness"
+                :key="illnessIndex"
+              >{{ illness }}</span>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@ export default {
           const data = {
             title: doc.data().title,
             desc: doc.data().desc,
-            ailments: doc.data().ailments,
+            illness: doc.data().illness,
             firstName: doc.data().firstName,
             lastName: doc.data().lastName,
           };

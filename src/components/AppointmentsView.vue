@@ -15,7 +15,7 @@
               <tr>
                 <th>Name</th>
                 <th>Time</th>
-                <th>Ailment</th>
+                <th>Illness</th>
                 <th>Link</th>
                 <th>Notes</th>
                 <th>Edit</th>
@@ -47,10 +47,10 @@
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   <span
-                    v-for="(disease, diseaseIndex) in appointment.diseases"
-                    :key="diseaseIndex"
+                    v-for="(illness, illnessIndex) in appointment.illness"
+                    :key="illnessIndex"
                     class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                  >{{ disease }}</span>
+                  >{{ illness }}</span>
                 </td>
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -125,7 +125,7 @@ export default {
                       const patientId = doc.data().patientId;
                       const data = {
                         time: this.formatTime(doc.data().time),
-                        diseases: doc.data().diseases,
+                        illness: doc.data().illness,
                         linkURL: doc.data().linkURL,
                         linkPassword: doc.data().linkPassword,
                         notes: doc.data().notes,

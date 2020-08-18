@@ -14,9 +14,9 @@
         />
       </div>
       <div class="mb-4 mt-4 p-2">
-        <div>Ailments</div>
+        <div>Illness</div>
         <div class="mb-2 text-gray-600 text-sm">Use commas to separate each</div>
-        <input type="text" maxlength="40" autocomplete required v-model="diseases" />
+        <input type="text" maxlength="40" autocomplete required v-model="illness" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Date</div>
@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       patientNames: null,
-      diseases: null,
+      illness: null,
       appointmentDate: null,
       appointmentTime: null,
       linkURL: null,
@@ -140,7 +140,7 @@ export default {
                           .add({
                             doctorId: doctorId[0].id,
                             patientId: patientId[0].id,
-                            diseases: this.diseases.split(","),
+                            illness: this.illness.split(","),
                             time: formattedTime,
                             linkURL: this.linkURL,
                             linkPassword: this.linkPassword,

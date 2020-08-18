@@ -6,6 +6,7 @@ import SignUp from '@/components/SignUp.vue'
 import Dashboard from '@/components/Dashboard.vue'
 import AppointmentsCreate from '@/components/AppointmentsCreate.vue'
 import PortalCreate from '@/components/PortalCreate.vue'
+import PortalView from '@/components/PortalView.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
         path: '/createdata',
         name: 'portal-create',
         component: PortalCreate
+    },
+    {
+        path: '/viewdata',
+        name: 'portal-view',
+        component: PortalView
     }
 ];
 

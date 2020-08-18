@@ -32,6 +32,7 @@
               class="px-5 py-6 shadow rounded-md bg-white text-gray-500 hover:text-gray-200 hover:bg-green-500 mb-5 sm:mx-5"
               v-for="(portalItem, portalItemIndex) in listPortalData"
               :key="portalItemIndex"
+              @click="viewData(portalItemIndex)"
             >
               <h4 class="text-xl text-gray-800">{{ portalItem.title }}</h4>
               <div class="text-sm mb-1">{{ portalItem.desc }}</div>
@@ -71,6 +72,7 @@ export default {
         keys: ["title", "illness"],
       },
       searchResults: [],
+      savedViewData: {}
     };
   },
   methods: {
@@ -88,6 +90,14 @@ export default {
         this.listPortalData = this.portalData;
       }
     },
+    viewData(portalItemIndex){
+      this.savedViewData = this.listPortalData[portalItemIndex];
+      localStorage.setItem(
+        "savedViewData",
+        JSON.stringify({ savedViewData: this.savedViewData })
+      );
+      this.$router.push("/viewdata");
+    },
   },
   created() {
     db.collection("portal")
@@ -97,6 +107,7 @@ export default {
           const data = {
             title: doc.data().title,
             desc: doc.data().desc,
+            body: doc.data().body,
             illness: doc.data().illness,
             firstName: doc.data().firstName,
             lastName: doc.data().lastName,

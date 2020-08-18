@@ -28,7 +28,7 @@
               href="#"
               target="_blank"
             >
-              <span class="mx-4">Item 2</span>
+              <router-link class="mx-4" to="/createdata">Create Portal Data</router-link>
             </a>
           </nav>
         </div>

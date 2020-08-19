@@ -44,7 +44,7 @@
                 v-for="(illness, illnessIndex) in portalItem.illness"
                 :key="illnessIndex"
               >{{ illness }}</span>
-          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default {
         keys: ["title", "illness"],
       },
       searchResults: [],
-      savedViewData: {}
+      savedViewData: {},
     };
   },
   methods: {
@@ -82,15 +82,15 @@ export default {
         this.searchResults = this.fuse.search(this.searchFor);
         if (this.searchResults != []) {
           this.listPortalData = [];
-          this.searchResults.forEach(result => {
-            this.listPortalData.push(result.item)
+          this.searchResults.forEach((result) => {
+            this.listPortalData.push(result.item);
           });
         }
       } else if (this.searchFor == "") {
         this.listPortalData = this.portalData;
       }
     },
-    viewData(portalItemIndex){
+    viewData(portalItemIndex) {
       this.savedViewData = this.listPortalData[portalItemIndex];
       localStorage.setItem(
         "savedViewData",

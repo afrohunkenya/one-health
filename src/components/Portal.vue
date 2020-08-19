@@ -105,6 +105,7 @@ export default {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const data = {
+            id: doc.data().doctorId,
             title: doc.data().title,
             desc: doc.data().desc,
             body: doc.data().body,

@@ -15,10 +15,10 @@
         >{{ illness }}</span>
         <div class="text-gray-500 my-5">{{savedViewData.desc}}</div>
         <div class="text-black mb-5" v-html="savedViewData.body"></div>
-        <button
+        <router-link
           class="p-2 bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500"
-          type="submit"
-        >Contact {{ savedViewData.firstName + " " + savedViewData.lastName }}</button>
+          to="/contactdoctor"
+        >Contact {{ savedViewData.firstName + " " + savedViewData.lastName }}</router-link>
       </div>
     </main>
   </div>

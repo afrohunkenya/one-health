@@ -18,7 +18,15 @@
         </div>
         <div class="mb-4 mt-4 p-2">
           <div class="mb-2">Body</div>
-          <textarea cols="30" rows="10" min maxlength="2000" autocomplete required v-model="body"></textarea>
+          <textarea
+            cols="30"
+            rows="10"
+            min
+            maxlength="2000"
+            autocomplete
+            required
+            v-model="bodyInput"
+          ></textarea>
         </div>
         <div class="flex flex-row">
           <button
@@ -45,6 +53,7 @@ export default {
     return {
       title: null,
       desc: null,
+      bodyInput: null,
       body: null,
       illness: null,
     };
@@ -68,11 +77,13 @@ export default {
                   };
                   var doctorData = [];
                   doctorData.push(data);
+                  this.body = this.bodyInput.split("\n").join("<br>");
 
                   db.collection("portal")
                     .add({
                       title: this.title,
                       desc: this.desc,
+                      body: this.body,
                       illness: this.illness.split(","),
                       doctorId: doctorData[0].id,
                       firstName: doctorData[0].firstName,

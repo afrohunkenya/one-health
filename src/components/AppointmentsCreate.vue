@@ -27,6 +27,9 @@
         <input class="bg-white" type="time" autocomplete required v-model="appointmentTime" />
       </div>
       <div class="mb-4 mt-4 p-2">
+        <div class="mb-2 text-green-600 text-sm">
+          <a href="https://zoom.us/signin">Sign In to Zoom to Create Link and Password</a>
+        </div>
         <div class="mb-2">Zoom Link</div>
         <input type="url" autocomplete required v-model="linkURL" />
       </div>

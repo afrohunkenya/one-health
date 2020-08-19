@@ -5,11 +5,11 @@
       <form @submit.prevent="createData">
         <div class="mb-4 mt-4 p-2">
           <div class="mb-2">Title</div>
-          <input type="text" minlength="4" maxlength="30" autocomplete required v-model="title" />
+          <input type="text" minlength="4" maxlength="150" autocomplete required v-model="title" />
         </div>
         <div class="mb-4 mt-4 p-2">
           <div class="mb-2">Description</div>
-          <input type="text" minlength="4" maxlength="60" autocomplete required v-model="desc" />
+          <input type="text" minlength="4" maxlength="250" autocomplete required v-model="desc" />
         </div>
         <div class="mb-4 mt-4 p-2">
           <div>Illness</div>

@@ -20,11 +20,11 @@
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Date</div>
-        <input type="date" autocomplete required v-model="appointmentDate" />
+        <input class="bg-white" type="date" autocomplete required v-model="appointmentDate" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Time</div>
-        <input type="time" autocomplete required v-model="appointmentTime" />
+        <input class="bg-white" type="time" autocomplete required v-model="appointmentTime" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Zoom Link</div>

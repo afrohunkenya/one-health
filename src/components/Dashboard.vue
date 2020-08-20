@@ -89,16 +89,12 @@ export default {
     };
   },
   mounted() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        var currentUser = firebase.auth().currentUser;
-        if (currentUser != null) {
-          this.email = currentUser.email;
-        }
-      } else {
-        this.$router.push("/");
-      }
-    });
+    var userEmail = localStorage.getItem("userEmail");
+    if (userEmail) {
+      this.email = JSON.parse(userEmail).userEmail;
+    } else {
+      this.$router.push("/");
+    }
   },
   methods: {
     toggleView(toggleViewNum) {

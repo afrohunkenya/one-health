@@ -38,9 +38,9 @@ export default {
     };
   },
   mounted() {
-    var localStorageNames = localStorage.getItem("savedViewData");
-    this.savedViewData = localStorageNames
-      ? JSON.parse(localStorageNames).savedViewData
+    var localStorageData = localStorage.getItem("savedViewData");
+    this.savedViewData = localStorageData
+      ? JSON.parse(localStorageData).savedViewData
       : {};
   },
 };

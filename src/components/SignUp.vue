@@ -127,6 +127,10 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then((docRef) => {
           docRef;
+          localStorage.setItem(
+            "userEmail",
+            JSON.stringify({ userEmail: this.email })
+          );
           this.$router.push("/dashboard");
         })
         .catch(function (error) {

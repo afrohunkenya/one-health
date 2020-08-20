@@ -53,13 +53,6 @@ export default {
       isLoginValid: true,
     };
   },
-  mounted() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.$router.push("/dashboard");
-      }
-    });
-  },
   methods: {
     logIn() {
       firebase
@@ -67,6 +60,10 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then((docRef) => {
           docRef;
+          localStorage.setItem(
+            "userEmail",
+            JSON.stringify({ userEmail: this.email })
+          );
           this.$router.push("/dashboard");
         })
         .catch((error) => {

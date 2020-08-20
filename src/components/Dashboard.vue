@@ -135,6 +135,7 @@ export default {
         .signOut()
         .then(
           function () {
+            localStorage.removeItem("userEmail");
             this.$router.push("/");
           },
           function (error) {

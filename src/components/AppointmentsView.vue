@@ -65,7 +65,7 @@
                 <td
                   class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
                 >
-                  <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                  <div class="text-indigo-600 hover:text-indigo-900" @click="editAppointment(appointmentIndex)">Edit</div>
                 </td>
 
                 <td
@@ -92,12 +92,21 @@ export default {
   data() {
     return {
       appointments: [],
+      savedEditAppointment: {},
     };
   },
   methods: {
     formatTime(unixTime) {
       const time = new Date(unixTime * 1000);
       return time.getHours() + ":" + ("0" + time.getMinutes()).substr(-2);
+    },
+    editAppointment(appointmentIndex) {
+      this.savedEditAppointment = this.appointments[appointmentIndex];
+      localStorage.setItem(
+        "savedEditAppointment",
+        JSON.stringify({ savedEditAppointment: this.savedEditAppointment })
+      );
+      this.$router.push("/editappointment");
     },
   },
   created() {
@@ -124,6 +133,9 @@ export default {
                     querySnapshot.forEach((doc) => {
                       const patientId = doc.data().patientId;
                       const data = {
+                        id: doc.id,
+                        doctorId: doc.data().doctorId,
+                        patientId: doc.data().patientId,
                         time: this.formatTime(doc.data().time),
                         illness: doc.data().illness,
                         linkURL: doc.data().linkURL,

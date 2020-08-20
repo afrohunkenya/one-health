@@ -23,7 +23,10 @@
               <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
             </div>
             <div class="flex items-center mt-4 py-2 px-6 text-white">
-              <span class="mx-4" @click="toggleView(3)">Create Portal Data</span>
+              <span class="mx-4" @click="toggleView(3)">Personal Portal Data</span>
+            </div>
+            <div class="flex items-center mt-4 py-2 px-6 text-white">
+              <span class="mx-4" @click="toggleView(4)">Create Portal Data</span>
             </div>
             <div class="flex items-center mt-4 py-2 px-6 text-white">
               <span class="mx-4" @click="logOut()">Logout</span>
@@ -60,7 +63,8 @@
           </header>
           <AppointmentsView v-if="showView == 1"></AppointmentsView>
           <AppointmentsCreate @toggle-default-view="toggleDefaultView" v-if="showView == 2"></AppointmentsCreate>
-          <PortalCreate @toggle-default-view="toggleDefaultView" v-if="showView == 3"></PortalCreate>
+          <PortalViewPersonal v-if="showView == 3"></PortalViewPersonal>
+          <PortalCreate @toggle-default-view="toggleDefaultView" v-if="showView == 4"></PortalCreate>
         </div>
       </div>
     </div>
@@ -72,6 +76,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import AppointmentsView from "./AppointmentsView";
 import AppointmentsCreate from "./AppointmentsCreate";
+import PortalViewPersonal from "./PortalViewPersonal";
 import PortalCreate from "./PortalCreate";
 
 export default {
@@ -79,6 +84,7 @@ export default {
   components: {
     AppointmentsView,
     AppointmentsCreate,
+    PortalViewPersonal,
     PortalCreate,
   },
   data() {

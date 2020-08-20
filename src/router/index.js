@@ -4,7 +4,6 @@ import Portal from '@/components/Portal.vue'
 import LogIn from '@/components/LogIn.vue'
 import SignUp from '@/components/SignUp.vue'
 import Dashboard from '@/components/Dashboard.vue'
-import AppointmentsCreate from '@/components/AppointmentsCreate.vue'
 import AppointmentsEdit from '@/components/AppointmentsEdit.vue'
 import PortalCreate from '@/components/PortalCreate.vue'
 import PortalView from '@/components/PortalView.vue'
@@ -31,11 +30,6 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: Dashboard
-    },
-    {
-        path: '/createappointment',
-        name: 'appointments-create',
-        component: AppointmentsCreate
     },
     {
         path: '/editappointment',

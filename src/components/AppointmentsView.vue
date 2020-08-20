@@ -2,11 +2,7 @@
   <div class="mt-8">
     <div class="flex flex-col mt-6">
       <div class="my-2 py-2 overflow-x-auto sm:mx-6 sm:px-6 lg:mx-8 lg:px-8">
-        <!-- <h4 class="text-gray-600 uppercase">Appointments</h4> -->
-        <router-link
-          class="p-2 mb-4 float-right bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500 ml-3"
-          to="/createappointment"
-        >Create Appointment</router-link>
+        <div class="mt-10 mb-4 text-gray-600 uppercase">Today</div>
         <div
           class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200"
         >

@@ -15,24 +15,19 @@
           <div class="text-center mt-4">
             <router-link class="text-white text-xl uppercase fo" to="/">One Health</router-link>
           </div>
-          <nav class="text-xl">
-            <a
-              class="flex items-center mt-4 py-2 px-6 border-l-4 bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100"
-              href="#"
-              target="_blank"
-            >
-              <span class="mx-4">Appointments</span>
-            </a>
-            <a
-              class="flex items-center mt-4 py-2 px-6 border-l-4 border-green-700 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100"
-              href="#"
-              target="_blank"
-            >
+          <nav>
+            <div class="flex items-center mt-4 py-2 px-6 text-white">
+              <span class="mx-4" @click="toggleView(1)">Appointments</span>
+            </div>
+            <div class="flex items-center mt-4 py-2 px-6 text-white">
+              <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
+            </div>
+            <div class="flex items-center mt-4 py-2 px-6 text-white">
               <router-link class="mx-4" to="/createdata">Create Portal Data</router-link>
-            </a>
+            </div>
           </nav>
         </div>
-        <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="flex-1 flex flex-col">
           <header
             class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-green-600"
           >
@@ -86,7 +81,8 @@
               </div>
             </div>
           </header>
-          <AppointmentsView />
+          <AppointmentsView v-if="showView == 1"></AppointmentsView>
+          <AppointmentsCreate v-if="showView == 2"></AppointmentsCreate>
         </div>
       </div>
     </div>
@@ -97,17 +93,20 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import AppointmentsView from "./AppointmentsView";
+import AppointmentsCreate from "./AppointmentsCreate";
 
 export default {
   name: "dashboard",
   components: {
     AppointmentsView,
+    AppointmentsCreate,
   },
   data() {
     return {
       email: null,
       sidebarOpen: false,
       dropdownOpen: false,
+      showView: 1,
     };
   },
   mounted() {
@@ -123,6 +122,10 @@ export default {
     });
   },
   methods: {
+    toggleView(toggleViewNum) {
+      this.showView = toggleViewNum;
+      this.sidebarOpen = false;
+    },
     logOut() {
       firebase
         .auth()

@@ -23,7 +23,7 @@
               <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
             </div>
             <div class="flex items-center mt-4 py-2 px-6 text-white">
-              <router-link class="mx-4" to="/createdata">Create Portal Data</router-link>
+              <div class="mx-4" @click="toggleView(3)">Create Portal Data</div>
             </div>
           </nav>
         </div>
@@ -83,6 +83,7 @@
           </header>
           <AppointmentsView v-if="showView == 1"></AppointmentsView>
           <AppointmentsCreate v-if="showView == 2"></AppointmentsCreate>
+          <PortalCreate v-if="showView == 3"></PortalCreate>
         </div>
       </div>
     </div>
@@ -94,12 +95,14 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import AppointmentsView from "./AppointmentsView";
 import AppointmentsCreate from "./AppointmentsCreate";
+import PortalCreate from "./PortalCreate";
 
 export default {
   name: "dashboard",
   components: {
     AppointmentsView,
     AppointmentsCreate,
+    PortalCreate,
   },
   data() {
     return {

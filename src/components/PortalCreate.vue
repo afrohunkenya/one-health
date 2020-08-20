@@ -91,7 +91,7 @@ export default {
                     })
                     .then((docRef) => {
                       docRef;
-                      this.$router.push("/");
+                      this.$emit("toggle-default-view");
                     })
                     .catch((err) => console.log(err));
                 });

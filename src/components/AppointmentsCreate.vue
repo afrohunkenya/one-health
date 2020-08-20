@@ -147,7 +147,7 @@ export default {
                       })
                       .then((docRef) => {
                         docRef;
-                        this.$router.push("/dashboard");
+                        this.$emit("toggle-default-view");
                       })
                       .catch((err) => console.log(err));
                   });

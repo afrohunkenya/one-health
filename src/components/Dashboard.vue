@@ -59,8 +59,8 @@
             </div>
           </header>
           <AppointmentsView v-if="showView == 1"></AppointmentsView>
-          <AppointmentsCreate v-if="showView == 2"></AppointmentsCreate>
-          <PortalCreate v-if="showView == 3"></PortalCreate>
+          <AppointmentsCreate @toggle-default-view="toggleDefaultView" v-if="showView == 2"></AppointmentsCreate>
+          <PortalCreate @toggle-default-view="toggleDefaultView" v-if="showView == 3"></PortalCreate>
         </div>
       </div>
     </div>
@@ -103,6 +103,10 @@ export default {
   methods: {
     toggleView(toggleViewNum) {
       this.showView = toggleViewNum;
+      this.sidebarOpen = false;
+    },
+    toggleDefaultView() {
+      this.showView = 1;
       this.sidebarOpen = false;
     },
     logOut() {

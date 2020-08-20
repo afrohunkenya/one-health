@@ -63,8 +63,6 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
 import db from "./firebaseInit";
 
 export default {
@@ -109,58 +107,54 @@ export default {
     },
     createAppointment() {
       this.patientNamesArr = this.patientNames.trim().split(" ");
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          var currentUser = firebase.auth().currentUser;
-          // Get doctor id via Auth email
-          if (currentUser != null) {
-            db.collection("users")
-              .where("email", "==", currentUser.email)
-              .get()
-              .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                  const data = {
-                    id: doc.id,
-                  };
-                  var doctorId = [];
-                  doctorId.push(data);
-                  // Get Patient Id
-                  db.collection("users")
-                    .where("firstName", "==", this.patientNamesArr[0])
-                    .where("lastName", "==", this.patientNamesArr[1])
-                    .get()
-                    .then((querySnapshot) => {
-                      querySnapshot.forEach((doc) => {
-                        const data = {
-                          id: doc.id,
-                        };
-                        const patientId = [];
-                        patientId.push(data);
-                        const formattedTime =
-                          Date.parse(this.formatTime()) / 100;
-                        // Insert into appointments table
-                        db.collection("appointments")
-                          .add({
-                            doctorId: doctorId[0].id,
-                            patientId: patientId[0].id,
-                            illness: this.illness.toLowerCase().split(","),
-                            time: formattedTime,
-                            linkURL: this.linkURL,
-                            linkPassword: this.linkPassword,
-                            notes: this.notes.trim(),
-                          })
-                          .then((docRef) => {
-                            docRef;
-                            this.$router.push("/dashboard");
-                          })
-                          .catch((err) => console.log(err));
-                      });
-                    });
+      var userEmail = localStorage.getItem("userEmail");
+      if (userEmail) {
+        userEmail = JSON.parse(userEmail).userEmail
+        // Get doctor id via email
+        db.collection("users")
+          .where("email", "==", userEmail)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const data = {
+                id: doc.id,
+              };
+              var doctorId = [];
+              doctorId.push(data);
+              // Get Patient Id
+              db.collection("users")
+                .where("firstName", "==", this.patientNamesArr[0])
+                .where("lastName", "==", this.patientNamesArr[1])
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    const data = {
+                      id: doc.id,
+                    };
+                    const patientId = [];
+                    patientId.push(data);
+                    const formattedTime = Date.parse(this.formatTime()) / 100;
+                    // Insert into appointments table
+                    db.collection("appointments")
+                      .add({
+                        doctorId: doctorId[0].id,
+                        patientId: patientId[0].id,
+                        illness: this.illness.toLowerCase().split(","),
+                        time: formattedTime,
+                        linkURL: this.linkURL,
+                        linkPassword: this.linkPassword,
+                        notes: this.notes.trim(),
+                      })
+                      .then((docRef) => {
+                        docRef;
+                        this.$router.push("/dashboard");
+                      })
+                      .catch((err) => console.log(err));
+                  });
                 });
-              });
-          }
-        }
-      });
+            });
+          });
+      }
     },
   },
 };

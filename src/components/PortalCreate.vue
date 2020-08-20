@@ -44,8 +44,6 @@
 
 <script>
 import db from "./firebaseInit";
-import firebase from "firebase/app";
-import "firebase/auth";
 
 export default {
   name: "PortalCreate",
@@ -60,45 +58,42 @@ export default {
   },
   methods: {
     createData() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          var currentUser = firebase.auth().currentUser;
-          // Get id and names via Auth email
-          if (currentUser != null) {
-            db.collection("users")
-              .where("email", "==", currentUser.email)
-              .get()
-              .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                  const data = {
-                    id: doc.id,
-                    firstName: doc.data().firstName,
-                    lastName: doc.data().lastName,
-                  };
-                  var doctorData = [];
-                  doctorData.push(data);
-                  this.body = this.bodyInput.split("\n").join("<br>");
+      var userEmail = localStorage.getItem("userEmail");
+      if (userEmail) {
+        userEmail = JSON.parse(userEmail).userEmail;
+        // Get id and names via email
+        db.collection("users")
+          .where("email", "==", userEmail)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const data = {
+                id: doc.id,
+                firstName: doc.data().firstName,
+                lastName: doc.data().lastName,
+              };
+              var doctorData = [];
+              doctorData.push(data);
+              this.body = this.bodyInput.split("\n").join("<br>");
 
-                  db.collection("portal")
-                    .add({
-                      title: this.title,
-                      desc: this.desc,
-                      body: this.body,
-                      illness: this.illness.split(","),
-                      doctorId: doctorData[0].id,
-                      firstName: doctorData[0].firstName,
-                      lastName: doctorData[0].lastName,
-                    })
-                    .then((docRef) => {
-                      docRef;
-                      this.$emit("toggle-default-view");
-                    })
-                    .catch((err) => console.log(err));
-                });
-              });
-          }
-        }
-      });
+              db.collection("portal")
+                .add({
+                  title: this.title,
+                  desc: this.desc,
+                  body: this.body,
+                  illness: this.illness.split(","),
+                  doctorId: doctorData[0].id,
+                  firstName: doctorData[0].firstName,
+                  lastName: doctorData[0].lastName,
+                })
+                .then((docRef) => {
+                  docRef;
+                  this.$emit("toggle-default-view");
+                })
+                .catch((err) => console.log(err));
+            });
+          });
+      }
     },
   },
 };

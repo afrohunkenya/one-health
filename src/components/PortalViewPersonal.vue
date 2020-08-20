@@ -11,6 +11,7 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Illness</th>
+                <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
               </tr>
@@ -45,6 +46,14 @@
                   >{{ illness }}</span>
                 </td>
 
+                <td
+                  class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
+                >
+                  <div
+                    class="text-indigo-600 hover:text-indigo-900"
+                    @click="viewData(portalItemIndex)"
+                  >View</div>
+                </td>
                 <td
                   class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
                 >
@@ -89,6 +98,14 @@ export default {
         showSentence.push(word);
       }
       return showSentence.join(" ");
+    },
+    viewData(portalItemIndex) {
+      this.savedViewData = this.portalData[portalItemIndex];
+      localStorage.setItem(
+        "savedViewData",
+        JSON.stringify({ savedViewData: this.savedViewData })
+      );
+      this.$router.push("/viewdata");
     },
   },
   created() {

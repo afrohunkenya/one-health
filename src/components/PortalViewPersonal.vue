@@ -27,13 +27,14 @@
                     <div class="m-4">
                       <div
                         class="text-sm leading-5 font-medium text-gray-900"
-                      >{{ portalItem.title }}</div>
+                        v-html="portalItem.title"
+                      ></div>
                     </div>
                   </div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                  <div class="text-sm leading-5 text-gray-900">{{ portalItem.desc }}</div>
+                  <div class="text-sm leading-5 text-gray-900" v-html="portalItem.desc"></div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -76,6 +77,20 @@ export default {
       portalData: [],
     };
   },
+  methods: {
+    formatSentence(sentence) {
+      const sentenceArr = sentence.split(" ");
+      const showSentence = [];
+      for (let h = 0; h < sentenceArr.length; h++) {
+        var word = sentenceArr[h];
+        if (h % 8 == 0 && h != 0) {
+          word = word + "<br>";
+        }
+        showSentence.push(word);
+      }
+      return showSentence.join(" ");
+    },
+  },
   created() {
     var userEmail = localStorage.getItem("userEmail");
     if (userEmail) {
@@ -98,8 +113,8 @@ export default {
               .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                   const data = {
-                    title: doc.data().title,
-                    desc: doc.data().desc,
+                    title: this.formatSentence(doc.data().title),
+                    desc: this.formatSentence(doc.data().desc),
                     illness: doc.data().illness,
                   };
 

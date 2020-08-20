@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div x-data="{ sidebarOpen: false }" class="flex h-screen font-roboto">
+      <div class="flex h-screen font-roboto">
         <div
           :class="sidebarOpen ? 'block' : 'hidden'"
           @click="sidebarOpen = false"

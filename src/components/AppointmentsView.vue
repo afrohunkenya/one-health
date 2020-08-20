@@ -122,63 +122,60 @@ export default {
     },
   },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        var currentUser = firebase.auth().currentUser;
-        // Get id via Auth email
-        if (currentUser != null) {
-          db.collection("users")
-            .where("email", "==", currentUser.email)
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                const data = {
-                  id: doc.id,
-                };
-                var doctorId = [];
-                doctorId.push(data);
-                //  Filter appointments via id
-                db.collection("appointments")
-                  .where("doctorId", "==", doctorId[0].id)
-                  .get()
-                  .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                      const patientId = doc.data().patientId;
-                      const data = {
-                        id: doc.id,
-                        doctorId: doc.data().doctorId,
-                        patientId: doc.data().patientId,
-                        time: this.formatTime(doc.data().time),
-                        illness: doc.data().illness,
-                        linkURL: doc.data().linkURL,
-                        linkPassword: doc.data().linkPassword,
-                        notes: doc.data().notes,
-                      };
+    var userEmail = localStorage.getItem("userEmail");
+    if (userEmail) {
+      userEmail = JSON.parse(userEmail).userEmail;
+      // Get id via email
+      db.collection("users")
+        .where("email", "==", userEmail)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const data = {
+              id: doc.id,
+            };
+            var doctorId = [];
+            doctorId.push(data);
+            //  Filter appointments via id
+            db.collection("appointments")
+              .where("doctorId", "==", doctorId[0].id)
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  const patientId = doc.data().patientId;
+                  const data = {
+                    id: doc.id,
+                    doctorId: doc.data().doctorId,
+                    patientId: doc.data().patientId,
+                    time: this.formatTime(doc.data().time),
+                    illness: doc.data().illness,
+                    linkURL: doc.data().linkURL,
+                    linkPassword: doc.data().linkPassword,
+                    notes: doc.data().notes,
+                  };
 
-                      db.collection("users")
-                        .where(
-                          firebase.firestore.FieldPath.documentId(),
-                          "==",
-                          patientId
-                        )
-                        .get()
-                        .then((querySnapshot) => {
-                          querySnapshot.forEach((doc) => {
-                            data.patient = {
-                              firstName: doc.data().firstName,
-                              surname: doc.data().surname,
-                              lastName: doc.data().lastName,
-                            };
-                            this.appointments.push(data);
-                          });
-                        });
+                  db.collection("users")
+                    .where(
+                      firebase.firestore.FieldPath.documentId(),
+                      "==",
+                      patientId
+                    )
+                    .get()
+                    .then((querySnapshot) => {
+                      querySnapshot.forEach((doc) => {
+                        data.patient = {
+                          firstName: doc.data().firstName,
+                          surname: doc.data().surname,
+                          lastName: doc.data().lastName,
+                        };
+                        this.appointments.push(data);
+                      });
                     });
-                  });
+                });
               });
-            });
-        }
-      }
-    });
+          });
+        });
+    }
   },
 };
 </script>

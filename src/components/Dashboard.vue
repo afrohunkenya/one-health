@@ -23,7 +23,10 @@
               <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
             </div>
             <div class="flex items-center mt-4 py-2 px-6 text-white">
-              <div class="mx-4" @click="toggleView(3)">Create Portal Data</div>
+              <span class="mx-4" @click="toggleView(3)">Create Portal Data</span>
+            </div>
+            <div class="flex items-center mt-4 py-2 px-6 text-white">
+              <span class="mx-4" @click="logOut()">Logout</span>
             </div>
           </nav>
         </div>
@@ -54,32 +57,6 @@
 
               <div class="relative mx-4 lg:mx-0">{{ email }}</div>
             </div>
-
-            <div class="flex items-center">
-              <div class="relative">
-                <button
-                  @click="dropdownOpen = !dropdownOpen"
-                  class="relative z-10 block h-8 w-8 rounded-full overflow-hidden shadow focus:outline-none"
-                >
-                  <img class="h-full w-full object-cover" alt="Avatar" />
-                </button>
-
-                <div
-                  v-show="dropdownOpen"
-                  class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20"
-                >
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-600 hover:text-white"
-                  >Profile</a>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-600 hover:text-white"
-                    @click="logOut()"
-                  >Logout</a>
-                </div>
-              </div>
-            </div>
           </header>
           <AppointmentsView v-if="showView == 1"></AppointmentsView>
           <AppointmentsCreate v-if="showView == 2"></AppointmentsCreate>
@@ -108,7 +85,6 @@ export default {
     return {
       email: null,
       sidebarOpen: false,
-      dropdownOpen: false,
       showView: 1,
     };
   },

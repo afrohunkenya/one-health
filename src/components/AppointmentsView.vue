@@ -65,13 +65,19 @@
                 <td
                   class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
                 >
-                  <div class="text-indigo-600 hover:text-indigo-900" @click="editAppointment(appointmentIndex)">Edit</div>
+                  <div
+                    class="text-indigo-600 hover:text-indigo-900"
+                    @click="editAppointment(appointmentIndex)"
+                  >Edit</div>
                 </td>
 
                 <td
                   class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
                 >
-                  <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                  <div
+                    class="text-red-600 hover:text-red-900"
+                    @click="deleteAppointment(appointmentIndex)"
+                  >Delete</div>
                 </td>
               </tr>
             </tbody>
@@ -107,6 +113,16 @@ export default {
         JSON.stringify({ savedEditAppointment: this.savedEditAppointment })
       );
       this.$router.push("/editappointment");
+    },
+    deleteAppointment(appointmentIndex) {
+      const appointmentToBeDeleted = this.appointments[appointmentIndex];
+      db.collection("appointments")
+        .doc(appointmentToBeDeleted.id)
+        .delete()
+        .then(function () {
+          window.location.reload(false);
+        })
+        .catch((err) => console.log(err));
     },
   },
   created() {

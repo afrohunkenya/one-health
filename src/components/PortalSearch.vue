@@ -58,7 +58,7 @@ import NavBar from "./NavBar";
 import Fuse from "fuse.js";
 
 export default {
-  name: "Portal",
+  name: "PortalSearch",
   components: {
     NavBar,
   },

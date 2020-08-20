@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Portal from '@/components/Portal.vue'
+import PortalSearch from '@/components/PortalSearch.vue'
 import LogIn from '@/components/LogIn.vue'
 import SignUp from '@/components/SignUp.vue'
 import Dashboard from '@/components/Dashboard.vue'
@@ -12,8 +12,8 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        name: 'portal',
-        component: Portal
+        name: 'portal-search',
+        component: PortalSearch
     },
     {
         path: '/signup',

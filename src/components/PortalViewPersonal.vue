@@ -62,6 +62,7 @@
 
                 <td
                   class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
+                  @click="deleteData(portalItemIndex)"
                 >
                   <div class="text-red-600 hover:text-red-900">Delete</div>
                 </td>
@@ -106,6 +107,16 @@ export default {
         JSON.stringify({ savedViewData: this.savedViewData })
       );
       this.$router.push("/viewdata");
+    },
+    deleteData(portalItemIndex) {
+      const dataToBeDeleted = this.portalData[portalItemIndex];
+      db.collection("portal")
+        .doc(dataToBeDeleted.id)
+        .delete()
+        .then(function () {
+          window.location.reload(false);
+        })
+        .catch((err) => console.log(err));
     },
   },
   created() {

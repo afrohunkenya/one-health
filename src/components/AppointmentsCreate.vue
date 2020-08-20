@@ -143,7 +143,7 @@ export default {
                           .add({
                             doctorId: doctorId[0].id,
                             patientId: patientId[0].id,
-                            illness: this.illness.split(","),
+                            illness: this.illness.toLowerCase().split(","),
                             time: formattedTime,
                             linkURL: this.linkURL,
                             linkPassword: this.linkPassword,

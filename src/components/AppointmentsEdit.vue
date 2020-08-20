@@ -113,7 +113,7 @@ export default {
         .set({
           doctorId: this.savedEditAppointment.doctorId,
           patientId: this.savedEditAppointment.patientId,
-          illness: this.illness.split(","),
+          illness: this.illness.toLowerCase().split(","),
           time: formattedTime,
           linkURL: this.linkURL,
           linkPassword: this.linkPassword,

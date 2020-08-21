@@ -28,6 +28,10 @@
           >Password should have 1 lowercase letter, 1 UPPERCASE LETTER, 1 digit and be at least 6 characters long</div>
         </div>
         <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Phone Number</div>
+          <input type="tel" autocomplete required v-model="phone" />
+        </div>
+        <div class="mb-4 mt-4 p-2">
           <div class="mb-2">Role</div>
           <select class="mb-2" name="type" required v-model="type" @change="showExtraField()">
             <option disabled>Choose your role</option>
@@ -90,6 +94,7 @@ export default {
       lastName: null,
       password: null,
       surname: null,
+      phone: null,
       type: null,
       username: null,
       dept: null,
@@ -151,6 +156,7 @@ export default {
               password: this.password,
               surname: this.surname,
               type: this.type,
+              phone: this.phone,
               username: this.username,
               doctorDept: this.dept,
             })

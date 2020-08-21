@@ -1,72 +1,65 @@
 <template>
-  <div>
-    <div>
-      <div class="flex h-screen font-roboto">
-        <div
-          :class="sidebarOpen ? 'block' : 'hidden'"
-          @click="sidebarOpen = false"
-          class="fixed z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden"
-        ></div>
+  <div class="flex h-screen font-roboto">
+    <div
+      :class="sidebarOpen ? 'block' : 'hidden'"
+      @click="sidebarOpen = false"
+      class="fixed z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden"
+    ></div>
 
-        <div
-          :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-          class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-green-700 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0"
-        >
-          <div class="text-center mt-4">
-            <router-link class="text-white text-xl uppercase fo" to="/">One Health</router-link>
-          </div>
-          <nav>
-            <div class="flex items-center mt-4 py-2 px-6 text-white">
-              <span class="mx-4" @click="toggleView(1)">Appointments</span>
-            </div>
-            <div class="flex items-center mt-4 py-2 px-6 text-white">
-              <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
-            </div>
-            <div class="flex items-center mt-4 py-2 px-6 text-white">
-              <span class="mx-4" @click="toggleView(3)">Personal Portal Data</span>
-            </div>
-            <div class="flex items-center mt-4 py-2 px-6 text-white">
-              <span class="mx-4" @click="toggleView(4)">Create Portal Data</span>
-            </div>
-            <div class="flex items-center mt-4 py-2 px-6 text-white">
-              <span class="mx-4" @click="logOut()">Logout</span>
-            </div>
-          </nav>
-        </div>
-        <div class="flex-1 flex flex-col">
-          <header
-            class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-green-600"
-          >
-            <div class="flex items-center">
-              <button
-                @click="sidebarOpen = true"
-                class="text-gray-500 focus:outline-none lg:hidden"
-              >
-                <svg
-                  class="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4 6H20M4 12H20M4 18H11"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
-
-              <div class="relative mx-4 lg:mx-0">{{ email }}</div>
-            </div>
-          </header>
-          <AppointmentsView v-if="showView == 1"></AppointmentsView>
-          <AppointmentsCreate @toggle-default-view="toggleDefaultView" v-if="showView == 2"></AppointmentsCreate>
-          <PortalViewPersonal v-if="showView == 3"></PortalViewPersonal>
-          <PortalCreate @toggle-default-view="toggleDefaultView" v-if="showView == 4"></PortalCreate>
-        </div>
+    <div
+      :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
+      class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-green-700 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0"
+    >
+      <div class="text-center mt-4">
+        <router-link class="text-white text-xl uppercase fo" to="/">One Health</router-link>
       </div>
+      <nav>
+        <div class="flex items-center mt-4 py-2 px-6 text-white">
+          <span class="mx-4" @click="toggleView(1)">Appointments</span>
+        </div>
+        <div class="flex items-center mt-4 py-2 px-6 text-white">
+          <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
+        </div>
+        <div class="flex items-center mt-4 py-2 px-6 text-white">
+          <span class="mx-4" @click="toggleView(3)">Personal Portal Data</span>
+        </div>
+        <div class="flex items-center mt-4 py-2 px-6 text-white">
+          <span class="mx-4" @click="toggleView(4)">Create Portal Data</span>
+        </div>
+        <div class="flex items-center mt-4 py-2 px-6 text-white">
+          <span class="mx-4" @click="logOut()">Logout</span>
+        </div>
+      </nav>
+    </div>
+    <div class="flex-1 flex flex-col">
+      <header
+        class="flex justify-between items-center py-4 px-6 bg-white border-b-4 border-green-600"
+      >
+        <div class="flex items-center">
+          <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
+            <svg
+              class="h-6 w-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 6H20M4 12H20M4 18H11"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <div class="relative mx-4 lg:mx-0">{{ email }}</div>
+        </div>
+      </header>
+      <AppointmentsView v-if="showView == 1"></AppointmentsView>
+      <AppointmentsCreate @toggle-default-view="toggleDefaultView" v-if="showView == 2"></AppointmentsCreate>
+      <PortalViewPersonal v-if="showView == 3"></PortalViewPersonal>
+      <PortalCreate @toggle-default-view="toggleDefaultView" v-if="showView == 4"></PortalCreate>
     </div>
   </div>
 </template>

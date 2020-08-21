@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import PortalSearch from '@/components/PortalSearch.vue'
+import LandingPage from '@/components/LandingPage.vue'
 import LogIn from '@/components/LogIn.vue'
 import SignUp from '@/components/SignUp.vue'
 import Dashboard from '@/components/Dashboard.vue'
 import AppointmentsEdit from '@/components/AppointmentsEdit.vue'
+import PortalSearch from '@/components/PortalSearch.vue'
 import PortalView from '@/components/PortalView.vue'
 import PortalContactDoctor from '@/components/PortalContactDoctor.vue'
 import PortalEditPersonal from '@/components/PortalEditPersonal.vue'
@@ -14,6 +15,11 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
+        name: 'landing-page',
+        component: LandingPage
+    },
+    {
+        path: '/portal',
         name: 'portal-search',
         component: PortalSearch
     },

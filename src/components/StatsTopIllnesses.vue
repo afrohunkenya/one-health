@@ -1,6 +1,18 @@
 <template>
   <div>
-    <div class="text-xl text-center mx-2 mb-8 uppercase">Top Illnesses This Month</div>
+    <div class="text-xl text-center mx-2 mb-2 uppercase">Top Illnesses This Month</div>
+
+    <div class="flex flex-row justify-center items-center mb-12">
+      <div class="m-1" v-for="(illness, illnessIndex) in listStatsData" :key="illnessIndex">
+        <a
+          class="text-green-800 uppercase underline text-sm"
+          :href="'https://search.cdc.gov/search/index.html?query=' + illness.illness"
+        >{{ illness.illness }}</a>
+      </div>
+    </div>
+    <div
+      class="m-2 text-gray-600 text-sm text-center"
+    >Filter the illnesses by clicking on the names below</div>
     <canvas id="DOMChart" width="200" height="200"></canvas>
   </div>
 </template>
@@ -15,6 +27,7 @@ export default {
   data() {
     return {
       statsData: [],
+      listStatsData: [],
     };
   },
   created() {
@@ -31,6 +44,7 @@ export default {
             content: doc.data().content,
           };
           this.statsData = data.content;
+          this.listStatsData = this.statsData.slice(0, 5);
 
           const ctx = document.getElementById("DOMChart").getContext("2d"),
             borderWidth = 3,

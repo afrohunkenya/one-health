@@ -48,6 +48,7 @@
           </div>
         </header>
         <StatsTopIllnesses v-if="showView == 1"></StatsTopIllnesses>
+        <StatsEmergingIllnesses v-if="showView == 2"></StatsEmergingIllnesses>
       </div>
     </div>
   </div>
@@ -56,12 +57,14 @@
 <script>
 import NavBar from "./NavBar";
 import StatsTopIllnesses from "./StatsTopIllnesses";
+import StatsEmergingIllnesses from "./StatsEmergingIllnesses";
 
 export default {
   name: "StatsView",
   components: {
     NavBar,
     StatsTopIllnesses,
+    StatsEmergingIllnesses,
   },
   data() {
     return {

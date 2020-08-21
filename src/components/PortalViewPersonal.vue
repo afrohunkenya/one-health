@@ -57,7 +57,10 @@
                 <td
                   class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
                 >
-                  <div class="text-indigo-600 hover:text-indigo-900">Edit</div>
+                  <div
+                    class="text-indigo-600 hover:text-indigo-900"
+                    @click="editData(portalItemIndex)"
+                  >Edit</div>
                 </td>
 
                 <td
@@ -108,6 +111,14 @@ export default {
       );
       this.$router.push("/viewdata");
     },
+    editData(portalItemIndex) {
+      this.savedEditData = this.portalData[portalItemIndex];
+      localStorage.setItem(
+        "savedEditData",
+        JSON.stringify({ savedEditData: this.savedEditData })
+      );
+      this.$router.push("/editdata");
+    },
     deleteData(portalItemIndex) {
       const dataToBeDeleted = this.portalData[portalItemIndex];
       db.collection("portal")
@@ -144,6 +155,11 @@ export default {
                     title: this.formatSentence(doc.data().title),
                     desc: this.formatSentence(doc.data().desc),
                     illness: doc.data().illness,
+                    id: doc.id,
+                    doctorId: doc.data().doctorId,
+                    firstName: doc.data().firstName,
+                    lastName: doc.data().lastName,
+                    body: doc.data().body,
                   };
 
                   this.portalData.push(data);

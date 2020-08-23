@@ -51,16 +51,19 @@
         </p>
       </div>
     </div>
+    <FooterSection></FooterSection>
   </div>
 </template>
 
 <script>
 import NavBar from "./NavBar";
+import FooterSection from "./FooterSection";
 
 export default {
   name: "LandingPage",
   components: {
     NavBar,
+    FooterSection,
   },
 };
 </script>

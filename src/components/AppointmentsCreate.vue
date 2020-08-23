@@ -19,6 +19,10 @@
         <input type="text" maxlength="40" autocomplete required v-model="illness" />
       </div>
       <div class="mb-4 mt-4 p-2">
+        <input type="checkbox" autocomplete v-model="illnessConfirmed" />
+        <span class="ml-3">Illness confirmed</span>
+      </div>
+      <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Date</div>
         <input class="bg-white" type="date" autocomplete required v-model="appointmentDate" />
       </div>
@@ -71,6 +75,7 @@ export default {
     return {
       patientNames: null,
       illness: null,
+      illnessConfirmed: null,
       appointmentDate: null,
       appointmentTime: null,
       linkURL: null,
@@ -109,7 +114,7 @@ export default {
       this.patientNamesArr = this.patientNames.trim().split(" ");
       var userEmail = localStorage.getItem("userEmail");
       if (userEmail) {
-        userEmail = JSON.parse(userEmail).userEmail
+        userEmail = JSON.parse(userEmail).userEmail;
         // Get doctor id via email
         db.collection("users")
           .where("email", "==", userEmail)
@@ -161,12 +166,18 @@ export default {
 </script>
 
 <style scoped>
-input,
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="url"],
 textarea,
 select {
   @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;
 }
 select {
   @apply bg-white text-black;
+}
+input[type="checkbox"] {
+  @apply shadow border rounded py-2 px-6 text-gray-700 leading-tight;
 }
 </style>

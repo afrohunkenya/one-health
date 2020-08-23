@@ -185,7 +185,6 @@ export default {
               type: doc.data().type,
             };
             var profileData = data;
-            console.log("created -> profileData", profileData);
             this.isDoctor = profileData.type == "D";
             this.$emit("toggle-sidebar-view", this.isDoctor);
             localStorage.setItem(
@@ -234,7 +233,6 @@ export default {
                 });
               //If Patient
             } else {
-              console.log("am a patient");
               //  Filter appointments via id
               db.collection("appointments")
                 .where("patientId", "==", profileData.id)

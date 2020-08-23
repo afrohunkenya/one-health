@@ -136,7 +136,6 @@ export default {
               email: doc.data().email,
               firstName: doc.data().firstName,
               lastName: doc.data().lastName,
-              password: doc.data().password,
               surname: doc.data().surname,
               type: doc.data().type,
               phone: doc.data().phone,

@@ -5,7 +5,7 @@
         <div
           class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200"
         >
-          <table class="min-w-full">
+          <table class="min-w-full" v-if="isDoctor">
             <thead>
               <tr>
                 <th>Name</th>
@@ -77,6 +77,55 @@
               </tr>
             </tbody>
           </table>
+          <table class="min-w-full" v-if="! isDoctor">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Time</th>
+                <th>Link</th>
+                <th>Email</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody
+              class="bg-white"
+              role="rowgroup"
+              v-for="(appointment, appointmentIndex) in appointments"
+              :key="appointmentIndex"
+            >
+              <tr role="row">
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="flex items-center">
+                    <div class="m-4">
+                      <div
+                        class="text-sm leading-5 font-medium text-gray-900"
+                      >{{ appointment.doctor.firstName +" " + appointment.doctor.lastName }}</div>
+                      <div class="text-sm leading-5 text-gray-500">{{ appointment.doctor.surname }}</div>
+                    </div>
+                  </div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="text-sm leading-5 text-gray-900">{{ appointment.time }}</div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="text-sm leading-5 text-gray-900">{{ appointment.linkURL }}</div>
+                  <div class="text-sm leading-5 text-gray-500">{{ appointment.linkPassword }}</div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="text-sm leading-5 text-gray-900">{{ appointment.doctor.email }}</div>
+                </td>
+
+                <td
+                  class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
+                >
+                  <div class="text-indigo-600 hover:text-indigo-900">Contact</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -94,6 +143,7 @@ export default {
     return {
       appointments: [],
       savedEditAppointment: {},
+      isDoctor: false,
     };
   },
   methods: {
@@ -132,46 +182,91 @@ export default {
           querySnapshot.forEach((doc) => {
             const data = {
               id: doc.id,
+              type: doc.data().type,
             };
-            var doctorId = [];
-            doctorId.push(data);
-            //  Filter appointments via id
-            db.collection("appointments")
-              .where("doctorId", "==", doctorId[0].id)
-              .get()
-              .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                  const patientId = doc.data().patientId;
-                  const data = {
-                    id: doc.id,
-                    doctorId: doc.data().doctorId,
-                    patientId: doc.data().patientId,
-                    time: this.formatTime(doc.data().time),
-                    illness: doc.data().illness,
-                    linkURL: doc.data().linkURL,
-                    linkPassword: doc.data().linkPassword,
-                    notes: doc.data().notes,
-                  };
+            var profileData = data;
+            console.log("created -> profileData", profileData);
+            this.isDoctor = profileData.type == "D";
 
-                  db.collection("users")
-                    .where(
-                      firebase.firestore.FieldPath.documentId(),
-                      "==",
-                      patientId
-                    )
-                    .get()
-                    .then((querySnapshot) => {
-                      querySnapshot.forEach((doc) => {
-                        data.patient = {
-                          firstName: doc.data().firstName,
-                          surname: doc.data().surname,
-                          lastName: doc.data().lastName,
-                        };
-                        this.appointments.push(data);
+            //If Doctor
+            if (this.isDoctor) {
+              //  Filter appointments via id
+              db.collection("appointments")
+                .where("doctorId", "==", profileData.id)
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    const patientId = doc.data().patientId;
+                    const data = {
+                      id: doc.id,
+                      doctorId: doc.data().doctorId,
+                      patientId: doc.data().patientId,
+                      time: this.formatTime(doc.data().time),
+                      illness: doc.data().illness,
+                      linkURL: doc.data().linkURL,
+                      linkPassword: doc.data().linkPassword,
+                      notes: doc.data().notes,
+                    };
+
+                    db.collection("users")
+                      .where(
+                        firebase.firestore.FieldPath.documentId(),
+                        "==",
+                        patientId
+                      )
+                      .get()
+                      .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                          data.patient = {
+                            firstName: doc.data().firstName,
+                            surname: doc.data().surname,
+                            lastName: doc.data().lastName,
+                          };
+                          this.appointments.push(data);
+                        });
                       });
-                    });
+                  });
                 });
-              });
+              //If Patient
+            } else {
+              console.log("am a patient");
+              //  Filter appointments via id
+              db.collection("appointments")
+                .where("patientId", "==", profileData.id)
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    const doctorId = doc.data().doctorId;
+                    const data = {
+                      id: doc.id,
+                      doctorId: doc.data().doctorId,
+                      patientId: doc.data().patientId,
+                      time: this.formatTime(doc.data().time),
+                      linkURL: doc.data().linkURL,
+                      linkPassword: doc.data().linkPassword,
+                    };
+
+                    db.collection("users")
+                      .where(
+                        firebase.firestore.FieldPath.documentId(),
+                        "==",
+                        doctorId
+                      )
+                      .get()
+                      .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                          data.doctor = {
+                            firstName: doc.data().firstName,
+                            surname: doc.data().surname,
+                            lastName: doc.data().lastName,
+                            email: doc.data().email,
+                          };
+                          this.appointments.push(data);
+                        });
+                      });
+                  });
+                });
+            }
           });
         });
     }

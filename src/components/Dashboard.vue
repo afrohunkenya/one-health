@@ -30,6 +30,9 @@
           <router-link class="mx-4" to="/stats">Stats</router-link>
         </div>
         <div class="flex items-center mt-4 py-2 px-6 text-white">
+          <span class="mx-4" @click="toggleView(5)">Edit Profile</span>
+        </div>
+        <div class="flex items-center mt-4 py-2 px-6 text-white">
           <span class="mx-4" @click="logOut()">Logout</span>
         </div>
       </nav>
@@ -63,6 +66,7 @@
       <AppointmentsCreate @toggle-default-view="toggleDefaultView" v-if="showView == 2"></AppointmentsCreate>
       <PortalViewPersonal v-if="showView == 3"></PortalViewPersonal>
       <PortalCreate @toggle-default-view="toggleDefaultView" v-if="showView == 4"></PortalCreate>
+      <ProfileEdit v-if="showView == 5"></ProfileEdit>
     </div>
   </div>
 </template>
@@ -74,6 +78,7 @@ import AppointmentsView from "./AppointmentsView";
 import AppointmentsCreate from "./AppointmentsCreate";
 import PortalViewPersonal from "./PortalViewPersonal";
 import PortalCreate from "./PortalCreate";
+import ProfileEdit from "./ProfileEdit";
 
 export default {
   name: "dashboard",
@@ -82,6 +87,7 @@ export default {
     AppointmentsCreate,
     PortalViewPersonal,
     PortalCreate,
+    ProfileEdit,
   },
   data() {
     return {

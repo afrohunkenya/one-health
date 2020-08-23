@@ -49,18 +49,21 @@
         </div>
       </div>
     </main>
+    <FooterSection />
   </div>
 </template>
 
 <script>
 import db from "./firebaseInit";
 import NavBar from "./NavBar";
+import FooterSection from "./FooterSection";
 import Fuse from "fuse.js";
 
 export default {
   name: "PortalSearch",
   components: {
     NavBar,
+    FooterSection,
   },
   data() {
     return {

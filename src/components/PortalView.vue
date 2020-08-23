@@ -18,6 +18,7 @@
         <router-link
           class="p-2 bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500"
           to="/contactdoctor"
+          v-if="isDoctor"
         >Contact {{ savedViewData.firstName + " " + savedViewData.lastName }}</router-link>
       </div>
     </main>
@@ -38,6 +39,7 @@ export default {
   data() {
     return {
       savedViewData: {},
+      isDoctor: null,
     };
   },
   mounted() {
@@ -45,6 +47,11 @@ export default {
     this.savedViewData = localStorageData
       ? JSON.parse(localStorageData).savedViewData
       : {};
+
+    var localStorageIsDoctor = localStorage.getItem("isDoctor");
+    if (localStorageIsDoctor) {
+      this.isDoctor = JSON.parse(localStorageIsDoctor).isDoctor;
+    }
   },
 };
 </script>

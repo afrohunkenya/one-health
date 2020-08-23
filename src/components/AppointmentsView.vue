@@ -187,7 +187,11 @@ export default {
             var profileData = data;
             console.log("created -> profileData", profileData);
             this.isDoctor = profileData.type == "D";
-            this.$emit('toggle-sidebar-view', this.isDoctor)
+            this.$emit("toggle-sidebar-view", this.isDoctor);
+            localStorage.setItem(
+              "isDoctor",
+              JSON.stringify({ isDoctor: this.isDoctor })
+            );
 
             //If Doctor
             if (this.isDoctor) {

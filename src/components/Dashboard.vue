@@ -17,14 +17,16 @@
         <div class="flex items-center mt-4 py-2 px-6 text-white">
           <span class="mx-4" @click="toggleView(1)">Appointments</span>
         </div>
-        <div class="flex items-center mt-4 py-2 px-6 text-white">
-          <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
-        </div>
-        <div class="flex items-center mt-4 py-2 px-6 text-white">
-          <span class="mx-4" @click="toggleView(3)">Personal Portal Data</span>
-        </div>
-        <div class="flex items-center mt-4 py-2 px-6 text-white">
-          <span class="mx-4" @click="toggleView(4)">Create Portal Data</span>
+        <div v-if="isDoctor">
+          <div class="flex items-center mt-4 py-2 px-6 text-white">
+            <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
+          </div>
+          <div class="flex items-center mt-4 py-2 px-6 text-white">
+            <span class="mx-4" @click="toggleView(3)">Personal Portal Data</span>
+          </div>
+          <div class="flex items-center mt-4 py-2 px-6 text-white">
+            <span class="mx-4" @click="toggleView(4)">Create Portal Data</span>
+          </div>
         </div>
         <div class="flex items-center mt-4 py-2 px-6 text-white">
           <router-link class="mx-4" to="/stats">Stats</router-link>
@@ -62,7 +64,7 @@
           <div class="relative mx-4 lg:mx-0">{{ email }}</div>
         </div>
       </header>
-      <AppointmentsView v-if="showView == 1"></AppointmentsView>
+      <AppointmentsView @toggle-sidebar-view="toggleSidebarView" v-if="showView == 1"></AppointmentsView>
       <AppointmentsCreate @toggle-default-view="toggleDefaultView" v-if="showView == 2"></AppointmentsCreate>
       <PortalViewPersonal v-if="showView == 3"></PortalViewPersonal>
       <PortalCreate @toggle-default-view="toggleDefaultView" v-if="showView == 4"></PortalCreate>
@@ -93,6 +95,7 @@ export default {
     return {
       email: null,
       sidebarOpen: false,
+      isDoctor: false,
       showView: 1,
     };
   },
@@ -105,6 +108,9 @@ export default {
     }
   },
   methods: {
+    toggleSidebarView(isDoctor) {
+      this.isDoctor = isDoctor;
+    },
     toggleView(toggleViewNum) {
       this.showView = toggleViewNum;
       this.sidebarOpen = false;

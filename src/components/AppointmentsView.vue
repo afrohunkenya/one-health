@@ -187,6 +187,7 @@ export default {
             var profileData = data;
             console.log("created -> profileData", profileData);
             this.isDoctor = profileData.type == "D";
+            this.$emit('toggle-sidebar-view', this.isDoctor)
 
             //If Doctor
             if (this.isDoctor) {

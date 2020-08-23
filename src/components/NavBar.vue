@@ -9,11 +9,14 @@
         v-show="contactOpen"
         class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20"
       >
-        <a href="tel:0711188890" class="block px-4 py-2 text-sm text-black hover:bg-green-600">Phone</a>
+        <a
+          href="tel:0711188890"
+          class="block px-4 py-2 text-sm text-black hover:bg-green-600"
+        >Hospital Phone</a>
         <a
           href="mailto:contact@hospital.com"
           class="block px-4 py-2 text-sm text-black hover:bg-green-600"
-        >Email</a>
+        >Hospital Email</a>
       </div>
     </div>
     <div class="relative">

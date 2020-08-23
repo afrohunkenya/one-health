@@ -66,6 +66,11 @@
 
           <div class="relative mx-4 lg:mx-0">{{ email }}</div>
         </div>
+        <div>
+          <span class="text-gray-600 text-sm uppercase">Contact Hospital</span>
+          <a href="tel:0711188890" class="mx-4">Phone</a>
+          <a href="mailto:contact@hospital.com" class="mx-4">Email</a>
+        </div>
       </header>
       <AppointmentsView @toggle-sidebar-view="toggleSidebarView" v-if="showView == 1"></AppointmentsView>
       <AppointmentsCreate @toggle-default-view="toggleDefaultView" v-if="showView == 2"></AppointmentsCreate>

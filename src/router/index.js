@@ -7,7 +7,7 @@ import Dashboard from '@/components/Dashboard.vue'
 import AppointmentsEdit from '@/components/AppointmentsEdit.vue'
 import PortalSearch from '@/components/PortalSearch.vue'
 import PortalView from '@/components/PortalView.vue'
-import PortalContactDoctor from '@/components/PortalContactDoctor.vue'
+import PortalDocContactDoc from '@/components/PortalDocContactDoc.vue'
 import PortalEditPersonal from '@/components/PortalEditPersonal.vue'
 import StatsView from '@/components/StatsView.vue'
 Vue.use(VueRouter)
@@ -55,8 +55,8 @@ const routes = [
     },
     {
         path: '/contactdoctor',
-        name: 'portal-contact-doctor',
-        component: PortalContactDoctor
+        name: 'portal-doc-contact-doc',
+        component: PortalDocContactDoc
     },
     {
         path: '/stats',

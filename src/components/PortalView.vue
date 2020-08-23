@@ -21,16 +21,19 @@
         >Contact {{ savedViewData.firstName + " " + savedViewData.lastName }}</router-link>
       </div>
     </main>
+    <FooterSection />
   </div>
 </template>
 
 <script>
 import NavBar from "./NavBar";
+import FooterSection from "./FooterSection";
 
 export default {
   name: "PortalView",
   components: {
     NavBar,
+    FooterSection,
   },
   data() {
     return {

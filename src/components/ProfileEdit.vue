@@ -116,6 +116,7 @@ export default {
             phone: this.phone,
             username: this.username,
             patientAddress: this.address,
+            type: this.profileData.type,
           })
           .then(function () {})
           .catch((err) => console.log(err));

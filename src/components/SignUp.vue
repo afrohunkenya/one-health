@@ -39,9 +39,14 @@
             <option value="P">Patient</option>
           </select>
         </div>
-        <div class="mb-4 mt-4 p-2" v-if="showDept">
-          <div class="mb-2">Department</div>
-          <input type="text" minlength="2" maxlength="20" autocomplete required v-model="dept" />
+        <div class="mb-4 mt-4 p-2" v-if="showHealth">
+          <div class="mb-2">Health</div>
+          <select class="mb-2" name="type" required v-model="health">
+            <option disabled>Choose type of health</option>
+            <option value="H">Human Health</option>
+            <option value="A">Animal Health</option>
+            <option value="E">Environmental Health</option>
+          </select>
         </div>
         <div class="mb-4 mt-4 p-2">
           <div class="mb-2">First Name</div>
@@ -97,21 +102,21 @@ export default {
       phone: null,
       type: null,
       username: null,
-      dept: null,
+      health: null,
       address: null,
       isPasswordValid: true,
       passwordRegex: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}/,
-      showDept: false,
+      showHealth: false,
       showAddress: false,
     };
   },
   methods: {
     showExtraField() {
       if (this.type == "D") {
-        this.showDept = true;
+        this.showHealth = true;
         this.showAddress = false;
       } else if (this.type == "P") {
-        this.showDept = false;
+        this.showHealth = false;
         this.showAddress = true;
       }
     },
@@ -158,7 +163,7 @@ export default {
               type: this.type,
               phone: this.phone,
               username: this.username,
-              doctorDept: this.dept,
+              healthType: this.health,
             })
             .then((docRef) => {
               docRef;

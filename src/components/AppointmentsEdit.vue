@@ -91,31 +91,6 @@ export default {
     };
   },
   methods: {
-    formatTime() {
-      const dateArr = this.appointmentDate.split("-");
-      var month = dateArr[1];
-      const monthArr = month.split("");
-      if (monthArr[0] == "0") {
-        month = monthArr[1];
-      }
-      const monthNames = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
-      return `${dateArr[2]} ${monthNames[parseInt(month) - 1]} ${dateArr[0]}  ${
-        this.appointmentTime
-      }:00 GMT`;
-    },
     editAppointment() {
       if (this.healthType == "E") {
         //If Environmental Health
@@ -136,7 +111,6 @@ export default {
           })
           .catch((err) => console.log(err));
       } else {
-        const formattedTime = Date.parse(this.formatTime()) / 100;
         if (this.healthType == "H") {
           //If Human Health
           db.collection("appointments")
@@ -145,7 +119,8 @@ export default {
               doctorId: this.savedEditAppointment.doctorId,
               patientId: this.savedEditAppointment.patientId,
               illness: this.illness.toLowerCase().split(","),
-              time: formattedTime,
+              date: this.appointmentDate,
+              time: this.appointmentTime,
               linkURL: this.linkURL,
               linkPassword: this.linkPassword,
               notes: this.notes.trim(),
@@ -164,7 +139,8 @@ export default {
               illness: this.illness.toLowerCase().split(","),
               animalCount: this.animalCount,
               environmentLocation: this.location,
-              time: formattedTime,
+              date: this.appointmentDate,
+              time: this.appointmentTime,
               linkURL: this.linkURL,
               linkPassword: this.linkPassword,
               notes: this.notes.trim(),

@@ -95,31 +95,6 @@ export default {
     };
   },
   methods: {
-    formatTime() {
-      const dateArr = this.appointmentDate.split("-");
-      var month = dateArr[1];
-      const monthArr = month.split("");
-      if (monthArr[0] == "0") {
-        month = monthArr[1];
-      }
-      const monthNames = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
-      return `${dateArr[2]} ${monthNames[parseInt(month) - 1]} ${dateArr[0]}  ${
-        this.appointmentTime
-      }:00 GMT`;
-    },
     createAppointment() {
       var userEmail = localStorage.getItem("userEmail");
       if (userEmail) {
@@ -168,7 +143,6 @@ export default {
                       };
                       const patientId = [];
                       patientId.push(data);
-                      const formattedTime = Date.parse(this.formatTime()) / 100;
                       if (this.healthType == "H") {
                         //If Human Health
                         // Insert into appointments table
@@ -177,7 +151,8 @@ export default {
                             doctorId: doctorId[0].id,
                             patientId: patientId[0].id,
                             illness: this.illness.toLowerCase().split(","),
-                            time: formattedTime,
+                            date: this.appointmentDate,
+                            time: this.appointmentTime,
                             linkURL: this.linkURL,
                             linkPassword: this.linkPassword,
                             notes: this.notes.trim(),
@@ -197,7 +172,8 @@ export default {
                             illness: this.illness.toLowerCase().split(","),
                             animalCount: this.animalCount,
                             location: this.location.trim(),
-                            time: formattedTime,
+                            date: this.appointmentDate,
+                            time: this.appointmentTime,
                             linkURL: this.linkURL,
                             linkPassword: this.linkPassword,
                             notes: this.notes.trim(),

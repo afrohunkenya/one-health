@@ -37,7 +37,7 @@
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   <div class="text-sm leading-5 text-gray-900">{{ appointment.time }}</div>
-                  <!-- <div class="text-sm leading-5 text-gray-500">August 8th</div> -->
+                  <div class="text-sm leading-5 text-gray-500">{{ appointment.date }}</div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -111,7 +111,7 @@
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   <div class="text-sm leading-5 text-gray-900">{{ appointment.time }}</div>
-                  <!-- <div class="text-sm leading-5 text-gray-500">August 8th</div> -->
+                  <div class="text-sm leading-5 text-gray-500">{{ appointment.date }}</div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -258,6 +258,7 @@
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                   <div class="text-sm leading-5 text-gray-900">{{ appointment.time }}</div>
+                  <div class="text-sm leading-5 text-gray-500">{{ appointment.date }}</div>
                 </td>
 
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -302,9 +303,28 @@ export default {
     };
   },
   methods: {
-    formatTime(unixTime) {
-      const time = new Date(unixTime * 1000);
-      return time.getHours() + ":" + ("0" + time.getMinutes()).substr(-2);
+    formatDate(date){
+      const dateArr = date.split("-");
+      var month = dateArr[1];
+      const monthArr = month.split("");
+      if (monthArr[0] == "0") {
+        month = monthArr[1];
+      }
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      return `${dateArr[2]} ${monthNames[parseInt(month) - 1]}, ${dateArr[0]}`;
     },
     getDocHumanHealth() {
       //  Filter appointments via id
@@ -318,7 +338,8 @@ export default {
               id: doc.id,
               doctorId: doc.data().doctorId,
               patientId: doc.data().patientId,
-              time: this.formatTime(doc.data().time),
+              date: this.formatDate(doc.data().date),
+              time: doc.data().time,
               illness: doc.data().illness,
               linkURL: doc.data().linkURL,
               linkPassword: doc.data().linkPassword,
@@ -353,7 +374,8 @@ export default {
               id: doc.id,
               doctorId: doc.data().doctorId,
               patientId: doc.data().patientId,
-              time: this.formatTime(doc.data().time),
+              date: this.formatDate(doc.data().date),
+              time: doc.data().time,
               illness: doc.data().illness,
               animalCount: doc.data().animalCount,
               animalLocation: doc.data().animalLocation,
@@ -389,7 +411,7 @@ export default {
               id: doc.id,
               doctorId: doc.data().doctorId,
               environmentLocation: doc.data().environmentLocation,
-              date: doc.data().date,
+              date: this.formatDate(doc.data().date),
               illness: doc.data().illness,
               linkURL: doc.data().linkURL,
               linkPassword: doc.data().linkPassword,
@@ -412,7 +434,8 @@ export default {
               id: doc.id,
               doctorId: doc.data().doctorId,
               patientId: doc.data().patientId,
-              time: this.formatTime(doc.data().time),
+              date: this.formatDate(doc.data().date),
+              time: doc.data().time,
               linkURL: doc.data().linkURL,
               linkPassword: doc.data().linkPassword,
             };

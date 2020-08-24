@@ -159,6 +159,75 @@
               </tr>
             </tbody>
           </table>
+          <table class="min-w-full" v-if="isDoctor && profileData.healthType == 'E'">
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Illness</th>
+                <th>Link</th>
+                <th>Intervention</th>
+                <th>Notes</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody
+              class="bg-white"
+              role="rowgroup"
+              v-for="(appointment, appointmentIndex) in appointments"
+              :key="appointmentIndex"
+            >
+              <tr role="row">
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="text-sm leading-5 text-gray-900">{{ appointment.environmentLocation }}</div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="text-sm leading-5 text-gray-900">{{ appointment.date }}</div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <span
+                    v-for="(illness, illnessIndex) in appointment.illness"
+                    :key="illnessIndex"
+                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                  >{{ illness }}</span>
+                </td>
+
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="text-sm leading-5 text-gray-900">{{ appointment.linkURL }}</div>
+                  <div class="text-sm leading-5 text-gray-500">{{ appointment.linkPassword }}</div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="text-sm leading-5 text-gray-900">{{ appointment.intervention }}</div>
+                </td>
+
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                  <div class="text-sm leading-5 text-gray-900">{{ appointment.notes }}</div>
+                </td>
+
+                <td
+                  class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
+                >
+                  <div
+                    class="text-indigo-600 hover:text-indigo-900"
+                    @click="editAppointment(appointmentIndex)"
+                  >Edit</div>
+                </td>
+
+                <td
+                  class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium"
+                >
+                  <div
+                    class="text-red-600 hover:text-red-900"
+                    @click="deleteAppointment(appointmentIndex)"
+                  >Delete</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
           <table class="min-w-full" v-if="! isDoctor">
             <thead>
               <tr>
@@ -309,6 +378,28 @@ export default {
           });
         });
     },
+    getDocEnvironmentalHealth() {
+      //  Filter appointments via id
+      db.collection("appointments")
+        .where("doctorId", "==", this.profileData.id)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const data = {
+              id: doc.id,
+              doctorId: doc.data().doctorId,
+              environmentLocation: doc.data().environmentLocation,
+              date: doc.data().date,
+              illness: doc.data().illness,
+              linkURL: doc.data().linkURL,
+              linkPassword: doc.data().linkPassword,
+              intervention: doc.data().intervention,
+              notes: doc.data().notes,
+            };
+            this.appointments.push(data);
+          });
+        });
+    },
     getPatient() {
       //  Filter appointments via id
       db.collection("appointments")
@@ -397,6 +488,9 @@ export default {
               } else if (this.profileData.healthType == "A") {
                 //If Animal Health
                 this.getDocAnimalHealth();
+              } else if (this.profileData.healthType == "E") {
+                //If Environmental Health
+                this.getDocEnvironmentalHealth();
               }
             } else {
               //If Patient

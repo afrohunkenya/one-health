@@ -470,7 +470,6 @@ export default {
             };
             this.profileData = data;
             this.isDoctor = this.profileData.type == "D";
-            this.$emit("toggle-sidebar-view", this.isDoctor);
             localStorage.setItem(
               "isDoctor",
               JSON.stringify({ isDoctor: this.isDoctor })
@@ -479,6 +478,7 @@ export default {
               "healthType",
               JSON.stringify({ healthType: this.profileData.healthType })
             );
+            this.$emit("toggle-sidebar-view", this.isDoctor, this.profileData.healthType);
 
             if (this.isDoctor) {
               //If Doctor

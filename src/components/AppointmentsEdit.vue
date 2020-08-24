@@ -1,6 +1,7 @@
 <template>
   <div class="container max-w-xs p-8">
-    <div class="text-2xl">Edit Appointment</div>
+    <div class="text-2xl" v-if="healthType != 'E'">Edit Appointment</div>
+    <div class="text-2xl" v-if="healthType == 'E'">Edit Inspection</div>
     <form @submit.prevent="editAppointment">
       <div class="mb-4 mt-4 p-2" v-if="healthType != 'E'">
         <div class="mb-2" v-if="healthType == 'H'">Patient First & Last Names</div>

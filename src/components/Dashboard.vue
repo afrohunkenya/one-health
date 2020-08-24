@@ -15,11 +15,17 @@
       </div>
       <nav>
         <div class="flex items-center mt-4 py-2 px-6 text-white">
-          <span class="mx-4" @click="toggleView(1)">Appointments</span>
+          <span class="mx-4" @click="toggleView(1)" v-if="! isEnvironmentalHealth">Appointments</span>
+          <span class="mx-4" @click="toggleView(1)" v-if="isEnvironmentalHealth">Inspections</span>
         </div>
         <div v-if="isDoctor">
           <div class="flex items-center mt-4 py-2 px-6 text-white">
-            <span class="mx-4" @click="toggleView(2)">Create Appointment</span>
+            <span
+              class="mx-4"
+              @click="toggleView(2)"
+              v-if="! isEnvironmentalHealth"
+            >Create Appointment</span>
+            <span class="mx-4" @click="toggleView(2)" v-if="isEnvironmentalHealth">Create Inspection</span>
           </div>
           <div class="flex items-center mt-4 py-2 px-6 text-white">
             <span class="mx-4" @click="toggleView(3)">Personal Portal Data</span>
@@ -104,6 +110,7 @@ export default {
       email: null,
       sidebarOpen: false,
       isDoctor: false,
+      isEnvironmentalHealth: false,
       showView: 1,
     };
   },
@@ -116,8 +123,9 @@ export default {
     }
   },
   methods: {
-    toggleSidebarView(isDoctor) {
+    toggleSidebarView(isDoctor, healthType) {
       this.isDoctor = isDoctor;
+      this.isEnvironmentalHealth = healthType == "E";
     },
     toggleView(toggleViewNum) {
       this.showView = toggleViewNum;

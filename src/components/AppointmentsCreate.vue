@@ -3,7 +3,8 @@
     <div class="text-2xl">Create Appointment</div>
     <form @submit.prevent="createAppointment">
       <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">Patient First & Last Names</div>
+        <div class="mb-2" v-if="healthType == 'H'">Patient First & Last Names</div>
+        <div class="mb-2" v-if="healthType == 'A'">Owner's First & Last Names</div>
         <input
           type="text"
           minlength="4"
@@ -21,6 +22,23 @@
       <div class="mb-4 mt-4 p-2">
         <input type="checkbox" autocomplete v-model="illnessConfirmed" />
         <span class="ml-3">Illness confirmed</span>
+      </div>
+      <div v-if="healthType == 'A'">
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">No. Of Animals</div>
+          <input type="number" min="1" autocomplete required v-model="animalCount" />
+        </div>
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Location</div>
+          <input
+            type="text"
+            minlength="2"
+            maxlength="30"
+            autocomplete
+            required
+            v-model="animalLocation"
+          />
+        </div>
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Date</div>
@@ -82,6 +100,9 @@ export default {
       linkPassword: null,
       notes: null,
       patientNamesArr: null,
+      healthType: null,
+      animalCount: null,
+      animalLocation: null,
     };
   },
   methods: {
@@ -139,28 +160,57 @@ export default {
                     const patientId = [];
                     patientId.push(data);
                     const formattedTime = Date.parse(this.formatTime()) / 100;
-                    // Insert into appointments table
-                    db.collection("appointments")
-                      .add({
-                        doctorId: doctorId[0].id,
-                        patientId: patientId[0].id,
-                        illness: this.illness.toLowerCase().split(","),
-                        time: formattedTime,
-                        linkURL: this.linkURL,
-                        linkPassword: this.linkPassword,
-                        notes: this.notes.trim(),
-                      })
-                      .then((docRef) => {
-                        docRef;
-                        this.$emit("toggle-default-view");
-                      })
-                      .catch((err) => console.log(err));
+                    if (this.healthType == "H") {
+                      //If Human Health
+                      // Insert into appointments table
+                      db.collection("appointments")
+                        .add({
+                          doctorId: doctorId[0].id,
+                          patientId: patientId[0].id,
+                          illness: this.illness.toLowerCase().split(","),
+                          time: formattedTime,
+                          linkURL: this.linkURL,
+                          linkPassword: this.linkPassword,
+                          notes: this.notes.trim(),
+                        })
+                        .then((docRef) => {
+                          docRef;
+                          this.$emit("toggle-default-view");
+                        })
+                        .catch((err) => console.log(err));
+                    } else if (this.healthType == "A") {
+                      //If Animal Health
+                      // Insert into appointments table
+                      db.collection("appointments")
+                        .add({
+                          doctorId: doctorId[0].id,
+                          patientId: patientId[0].id,
+                          illness: this.illness.toLowerCase().split(","),
+                          animalCount: this.animalCount,
+                          animalLocation: this.animalLocation.trim(),
+                          time: formattedTime,
+                          linkURL: this.linkURL,
+                          linkPassword: this.linkPassword,
+                          notes: this.notes.trim(),
+                        })
+                        .then((docRef) => {
+                          docRef;
+                          this.$emit("toggle-default-view");
+                        })
+                        .catch((err) => console.log(err));
+                    }
                   });
                 });
             });
           });
       }
     },
+  },
+  mounted() {
+    var localStorageData = localStorage.getItem("healthType");
+    this.healthType = localStorageData
+      ? JSON.parse(localStorageData).healthType
+      : "";
   },
 };
 </script>
@@ -170,6 +220,7 @@ input[type="text"],
 input[type="date"],
 input[type="time"],
 input[type="url"],
+input[type="number"],
 textarea,
 select {
   @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight;

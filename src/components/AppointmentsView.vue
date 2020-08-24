@@ -384,6 +384,10 @@ export default {
               "isDoctor",
               JSON.stringify({ isDoctor: this.isDoctor })
             );
+            localStorage.setItem(
+              "healthType",
+              JSON.stringify({ healthType: this.profileData.healthType })
+            );
 
             if (this.isDoctor) {
               //If Doctor

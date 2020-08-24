@@ -163,7 +163,7 @@ export default {
               patientId: this.savedEditAppointment.patientId,
               illness: this.illness.toLowerCase().split(","),
               animalCount: this.animalCount,
-              environmentalLocation: this.location,
+              environmentLocation: this.location,
               time: formattedTime,
               linkURL: this.linkURL,
               linkPassword: this.linkPassword,

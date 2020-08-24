@@ -2,7 +2,7 @@
   <div class="container max-w-xs p-8">
     <div class="text-2xl">Create Appointment</div>
     <form @submit.prevent="createAppointment">
-      <div class="mb-4 mt-4 p-2">
+      <div class="mb-4 mt-4 p-2" v-if="healthType != 'E'">
         <div class="mb-2" v-if="healthType == 'H'">Patient First & Last Names</div>
         <div class="mb-2" v-if="healthType == 'A'">Owner's First & Last Names</div>
         <input
@@ -23,28 +23,19 @@
         <input type="checkbox" autocomplete v-model="illnessConfirmed" />
         <span class="ml-3">Illness confirmed</span>
       </div>
-      <div v-if="healthType == 'A'">
-        <div class="mb-4 mt-4 p-2">
-          <div class="mb-2">No. Of Animals</div>
-          <input type="number" min="1" autocomplete required v-model="animalCount" />
-        </div>
-        <div class="mb-4 mt-4 p-2">
-          <div class="mb-2">Location</div>
-          <input
-            type="text"
-            minlength="2"
-            maxlength="30"
-            autocomplete
-            required
-            v-model="animalLocation"
-          />
-        </div>
+      <div class="mb-4 mt-4 p-2" v-if="healthType == 'A'">
+        <div class="mb-2">No. Of Animals</div>
+        <input type="number" min="1" autocomplete required v-model="animalCount" />
+      </div>
+      <div class="mb-4 mt-4 p-2" v-if="healthType != 'H'">
+        <div class="mb-2">Location</div>
+        <input type="text" minlength="2" maxlength="30" autocomplete required v-model="location" />
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Date</div>
         <input class="bg-white" type="date" autocomplete required v-model="appointmentDate" />
       </div>
-      <div class="mb-4 mt-4 p-2">
+      <div class="mb-4 mt-4 p-2" v-if="healthType != 'E'">
         <div class="mb-2">Time</div>
         <input class="bg-white" type="time" autocomplete required v-model="appointmentTime" />
       </div>
@@ -58,6 +49,18 @@
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Zoom Password</div>
         <input type="text" minlength="2" autocomplete required v-model="linkPassword" />
+      </div>
+      <div class="mb-4 mt-4 p-2" v-if="healthType == 'E'">
+        <div class="mb-2">Intervention</div>
+        <textarea
+          name="notes"
+          cols="30"
+          rows="10"
+          maxlength="500"
+          autocomplete
+          required
+          v-model="intervention"
+        ></textarea>
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Doctor Notes</div>
@@ -102,7 +105,8 @@ export default {
       patientNamesArr: null,
       healthType: null,
       animalCount: null,
-      animalLocation: null,
+      location: null,
+      intervention: null,
     };
   },
   methods: {
@@ -132,7 +136,6 @@ export default {
       }:00 GMT`;
     },
     createAppointment() {
-      this.patientNamesArr = this.patientNames.trim().split(" ");
       var userEmail = localStorage.getItem("userEmail");
       if (userEmail) {
         userEmail = JSON.parse(userEmail).userEmail;
@@ -147,60 +150,82 @@ export default {
               };
               var doctorId = [];
               doctorId.push(data);
-              // Get Patient Id
-              db.collection("users")
-                .where("firstName", "==", this.patientNamesArr[0])
-                .where("lastName", "==", this.patientNamesArr[1])
-                .get()
-                .then((querySnapshot) => {
-                  querySnapshot.forEach((doc) => {
-                    const data = {
-                      id: doc.id,
-                    };
-                    const patientId = [];
-                    patientId.push(data);
-                    const formattedTime = Date.parse(this.formatTime()) / 100;
-                    if (this.healthType == "H") {
-                      //If Human Health
-                      // Insert into appointments table
-                      db.collection("appointments")
-                        .add({
-                          doctorId: doctorId[0].id,
-                          patientId: patientId[0].id,
-                          illness: this.illness.toLowerCase().split(","),
-                          time: formattedTime,
-                          linkURL: this.linkURL,
-                          linkPassword: this.linkPassword,
-                          notes: this.notes.trim(),
-                        })
-                        .then((docRef) => {
-                          docRef;
-                          this.$emit("toggle-default-view");
-                        })
-                        .catch((err) => console.log(err));
-                    } else if (this.healthType == "A") {
-                      //If Animal Health
-                      // Insert into appointments table
-                      db.collection("appointments")
-                        .add({
-                          doctorId: doctorId[0].id,
-                          patientId: patientId[0].id,
-                          illness: this.illness.toLowerCase().split(","),
-                          animalCount: this.animalCount,
-                          animalLocation: this.animalLocation.trim(),
-                          time: formattedTime,
-                          linkURL: this.linkURL,
-                          linkPassword: this.linkPassword,
-                          notes: this.notes.trim(),
-                        })
-                        .then((docRef) => {
-                          docRef;
-                          this.$emit("toggle-default-view");
-                        })
-                        .catch((err) => console.log(err));
-                    }
+              if (this.healthType == "E") {
+                //If Environmental Health
+                // Insert into appointments table
+                db.collection("appointments")
+                  .add({
+                    doctorId: doctorId[0].id,
+                    environmentLocation: this.location,
+                    date: this.appointmentDate,
+                    illness: this.illness.toLowerCase().split(","),
+                    linkURL: this.linkURL,
+                    linkPassword: this.linkPassword,
+                    intervention: this.intervention.trim(),
+                    notes: this.notes.trim(),
+                  })
+                  .then((docRef) => {
+                    docRef;
+                    this.$emit("toggle-default-view");
+                  })
+                  .catch((err) => console.log(err));
+              } else {
+                // Get Patient Id
+                this.patientNamesArr = this.patientNames.trim().split(" ");
+                db.collection("users")
+                  .where("firstName", "==", this.patientNamesArr[0])
+                  .where("lastName", "==", this.patientNamesArr[1])
+                  .get()
+                  .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                      const data = {
+                        id: doc.id,
+                      };
+                      const patientId = [];
+                      patientId.push(data);
+                      const formattedTime = Date.parse(this.formatTime()) / 100;
+                      if (this.healthType == "H") {
+                        //If Human Health
+                        // Insert into appointments table
+                        db.collection("appointments")
+                          .add({
+                            doctorId: doctorId[0].id,
+                            patientId: patientId[0].id,
+                            illness: this.illness.toLowerCase().split(","),
+                            time: formattedTime,
+                            linkURL: this.linkURL,
+                            linkPassword: this.linkPassword,
+                            notes: this.notes.trim(),
+                          })
+                          .then((docRef) => {
+                            docRef;
+                            this.$emit("toggle-default-view");
+                          })
+                          .catch((err) => console.log(err));
+                      } else if (this.healthType == "A") {
+                        //If Animal Health
+                        // Insert into appointments table
+                        db.collection("appointments")
+                          .add({
+                            doctorId: doctorId[0].id,
+                            patientId: patientId[0].id,
+                            illness: this.illness.toLowerCase().split(","),
+                            animalCount: this.animalCount,
+                            location: this.location.trim(),
+                            time: formattedTime,
+                            linkURL: this.linkURL,
+                            linkPassword: this.linkPassword,
+                            notes: this.notes.trim(),
+                          })
+                          .then((docRef) => {
+                            docRef;
+                            this.$emit("toggle-default-view");
+                          })
+                          .catch((err) => console.log(err));
+                      }
+                    });
                   });
-                });
+              }
             });
           });
       }

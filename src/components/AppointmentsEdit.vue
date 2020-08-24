@@ -3,7 +3,8 @@
     <div class="text-2xl">Edit Appointment</div>
     <form @submit.prevent="editAppointment">
       <div class="mb-4 mt-4 p-2">
-        <div class="mb-2">Patient First & Last Names</div>
+        <div class="mb-2" v-if="healthType == 'H'">Patient First & Last Names</div>
+        <div class="mb-2" v-if="healthType == 'A'">Owner's First & Last Names</div>
         <input
           type="text"
           minlength="4"
@@ -17,6 +18,23 @@
         <div>Illness</div>
         <div class="mb-2 text-gray-600 text-sm">Use commas to separate each</div>
         <input type="text" maxlength="40" autocomplete required v-model="illness" />
+      </div>
+      <div v-if="healthType == 'A'">
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">No. Of Animals</div>
+          <input type="number" min="1" autocomplete required v-model="animalCount" />
+        </div>
+        <div class="mb-4 mt-4 p-2">
+          <div class="mb-2">Location</div>
+          <input
+            type="text"
+            minlength="2"
+            maxlength="30"
+            autocomplete
+            required
+            v-model="animalLocation"
+          />
+        </div>
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Date</div>
@@ -78,6 +96,9 @@ export default {
       linkPassword: null,
       notes: null,
       patientNamesArr: null,
+      healthType: null,
+      animalCount: null,
+      animalLocation: null,
     };
   },
   methods: {
@@ -108,21 +129,43 @@ export default {
     },
     editAppointment() {
       const formattedTime = Date.parse(this.formatTime()) / 100;
-      db.collection("appointments")
-        .doc(this.savedEditAppointment.id)
-        .set({
-          doctorId: this.savedEditAppointment.doctorId,
-          patientId: this.savedEditAppointment.patientId,
-          illness: this.illness.toLowerCase().split(","),
-          time: formattedTime,
-          linkURL: this.linkURL,
-          linkPassword: this.linkPassword,
-          notes: this.notes.trim(),
-        })
-        .then(function () {
-          this.$router.push("/dashboard");
-        })
-        .catch((err) => console.log(err));
+      if (this.healthType == "H") {
+        //If Human Health
+        db.collection("appointments")
+          .doc(this.savedEditAppointment.id)
+          .set({
+            doctorId: this.savedEditAppointment.doctorId,
+            patientId: this.savedEditAppointment.patientId,
+            illness: this.illness.toLowerCase().split(","),
+            time: formattedTime,
+            linkURL: this.linkURL,
+            linkPassword: this.linkPassword,
+            notes: this.notes.trim(),
+          })
+          .then(function () {
+            this.$router.push("/dashboard");
+          })
+          .catch((err) => console.log(err));
+      } else if (this.healthType == "A") {
+        //If Animal Health
+        db.collection("appointments")
+          .doc(this.savedEditAppointment.id)
+          .set({
+            doctorId: this.savedEditAppointment.doctorId,
+            patientId: this.savedEditAppointment.patientId,
+            illness: this.illness.toLowerCase().split(","),
+            animalCount: this.animalCount,
+            animalLocation: this.animalLocation,
+            time: formattedTime,
+            linkURL: this.linkURL,
+            linkPassword: this.linkPassword,
+            notes: this.notes.trim(),
+          })
+          .then(function () {
+            this.$router.push("/dashboard");
+          })
+          .catch((err) => console.log(err));
+      }
     },
   },
   mounted() {
@@ -138,6 +181,15 @@ export default {
     this.linkURL = this.savedEditAppointment.linkURL;
     this.linkPassword = this.savedEditAppointment.linkPassword;
     this.notes = this.savedEditAppointment.notes;
+
+    var localStorageHealthType = localStorage.getItem("healthType");
+    this.healthType = localStorageHealthType
+      ? JSON.parse(localStorageHealthType).healthType
+      : "";
+    if (this.healthType == "A") {
+      this.animalCount = this.savedEditAppointment.animalCount;
+      this.animalLocation = this.savedEditAppointment.animalLocation;
+    }
   },
 };
 </script>

@@ -52,27 +52,11 @@
       </div>
       <div class="mb-4 mt-4 p-2" v-if="healthType == 'E'">
         <div class="mb-2">Intervention</div>
-        <textarea
-          name="notes"
-          cols="30"
-          rows="10"
-          maxlength="500"
-          autocomplete
-          required
-          v-model="intervention"
-        ></textarea>
+        <textarea cols="30" rows="10" maxlength="500" autocomplete required v-model="intervention"></textarea>
       </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">Doctor Notes</div>
-        <textarea
-          name="notes"
-          cols="30"
-          rows="10"
-          maxlength="500"
-          autocomplete
-          required
-          v-model="notes"
-        ></textarea>
+        <textarea cols="30" rows="10" maxlength="500" autocomplete required v-model="notes"></textarea>
       </div>
       <div class="flex flex-row">
         <button

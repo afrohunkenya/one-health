@@ -478,7 +478,11 @@ export default {
               "healthType",
               JSON.stringify({ healthType: this.profileData.healthType })
             );
-            this.$emit("toggle-sidebar-view", this.isDoctor, this.profileData.healthType);
+            this.$emit(
+              "toggle-sidebar-view",
+              this.isDoctor,
+              this.profileData.healthType
+            );
 
             if (this.isDoctor) {
               //If Doctor

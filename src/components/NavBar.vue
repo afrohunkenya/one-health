@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="relative">
-      <button @click="menuOpen = !menuOpen" class="text-white focus:outline-none lg:hidden">
+      <button @click="menuOpen = !menuOpen" class="text-white focus:outline-none">
         <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M4 6H20M4 12H20M4 18H11"

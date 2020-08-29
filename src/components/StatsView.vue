@@ -22,9 +22,7 @@
         </nav>
       </div>
       <div class="flex-1 flex flex-col">
-        <header
-          class="flex justify-between items-center py-4 px-6 bg-white"
-        >
+        <header class="flex justify-between items-center py-4 px-6 bg-white">
           <div class="flex items-center">
             <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
               <svg

@@ -303,7 +303,7 @@ export default {
     };
   },
   methods: {
-    formatDate(date){
+    formatDate(date) {
       const dateArr = date.split("-");
       var month = dateArr[1];
       const monthArr = month.split("");

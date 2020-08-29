@@ -2,7 +2,7 @@
   <div class="container max-w-xs p-8">
     <div class="text-2xl" v-if="healthType != 'E'">Create Appointment</div>
     <div class="text-2xl" v-if="healthType == 'E'">Create Inspection</div>
-    <form @submit.prevent="createAppointment">
+    <form @submit.prevent="sendEmail">
       <div class="mb-4 mt-4 p-2" v-if="healthType != 'E'">
         <div class="mb-2" v-if="healthType == 'H'">Patient First & Last Names</div>
         <div class="mb-2" v-if="healthType == 'A'">Owner's First & Last Names</div>
@@ -95,42 +95,26 @@ export default {
     };
   },
   methods: {
-    createAppointment() {
+    sendEmail() {
       var userEmail = localStorage.getItem("userEmail");
       if (userEmail) {
         userEmail = JSON.parse(userEmail).userEmail;
-        // Get doctor id via email
-        db.collection("users")
-          .where("email", "==", userEmail)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              const data = {
-                id: doc.id,
-              };
-              var doctorId = [];
-              doctorId.push(data);
-              if (this.healthType == "E") {
-                //If Environmental Health
-                // Insert into appointments table
-                db.collection("appointments")
-                  .add({
-                    doctorId: doctorId[0].id,
-                    environmentLocation: this.location,
-                    date: this.appointmentDate,
-                    illness: this.illness.toLowerCase().split(","),
-                    linkURL: this.linkURL,
-                    linkPassword: this.linkPassword,
-                    intervention: this.intervention.trim(),
-                    notes: this.notes.trim(),
-                  })
-                  .then((docRef) => {
-                    docRef;
-                    this.$emit("toggle-default-view");
-                  })
-                  .catch((err) => console.log(err));
-              } else {
-                // Get Patient Id
+        if (this.healthType != "E") {
+          //Get doctor's details
+          db.collection("users")
+            .where("email", "==", userEmail)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                const doctorData = {
+                  id: doc.id,
+                  firstName: doc.data().firstName,
+                  surname: doc.data().surname,
+                  lastName: doc.data().lastName,
+                  email: doc.data().email,
+                };
+
+                //Get patient's details
                 this.patientNamesArr = this.patientNames.trim().split(" ");
                 db.collection("users")
                   .where("firstName", "==", this.patientNamesArr[0])
@@ -138,57 +122,110 @@ export default {
                   .get()
                   .then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
-                      const data = {
+                      const patientData = {
                         id: doc.id,
+                        email: doc.data().email,
                       };
-                      const patientId = [];
-                      patientId.push(data);
-                      if (this.healthType == "H") {
-                        //If Human Health
-                        // Insert into appointments table
-                        db.collection("appointments")
-                          .add({
-                            doctorId: doctorId[0].id,
-                            patientId: patientId[0].id,
-                            illness: this.illness.toLowerCase().split(","),
-                            date: this.appointmentDate,
-                            time: this.appointmentTime,
-                            linkURL: this.linkURL,
-                            linkPassword: this.linkPassword,
-                            notes: this.notes.trim(),
-                          })
-                          .then((docRef) => {
-                            docRef;
-                            this.$emit("toggle-default-view");
-                          })
-                          .catch((err) => console.log(err));
-                      } else if (this.healthType == "A") {
-                        //If Animal Health
-                        // Insert into appointments table
-                        db.collection("appointments")
-                          .add({
-                            doctorId: doctorId[0].id,
-                            patientId: patientId[0].id,
-                            illness: this.illness.toLowerCase().split(","),
-                            animalCount: this.animalCount,
-                            location: this.location.trim(),
-                            date: this.appointmentDate,
-                            time: this.appointmentTime,
-                            linkURL: this.linkURL,
-                            linkPassword: this.linkPassword,
-                            notes: this.notes.trim(),
-                          })
-                          .then((docRef) => {
-                            docRef;
-                            this.$emit("toggle-default-view");
-                          })
-                          .catch((err) => console.log(err));
-                      }
+
+                      //Send Email
+                      fetch(
+                        `http://localhost:3000/appointment?names=${doctorData.firstName}.${doctorData.lastName}.${doctorData.surname}&emails=${doctorData.email}.${patientData.email}&time=${this.appointmentDate}.${this.appointmentTime}&linkurl=${this.linkURL}&linkpass=${this.linkPassword}`
+                      )
+                        .then((data) => data.json())
+                        .then((res) => {
+                          res = JSON.parse(res);
+                          console.log("editAppointment -> res", res);
+                          if (res.sent) {
+                            this.createAppointment(
+                              doctorData.id,
+                              patientData.id
+                            );
+                          }
+                        })
+                        .catch((err) => console.log(err));
                     });
-                  });
-              }
+                  })
+                  .catch((err) => console.log(err));
+              });
             });
-          });
+        } else {
+          //If Environmental Health
+          // Get doctor id via email
+          db.collection("users")
+            .where("email", "==", userEmail)
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                const doctorData = {
+                  id: doc.id,
+                };
+                this.createAppointmentEnvironmental(doctorData.id);
+              });
+            })
+            .catch((err) => console.log(err));
+        }
+      }
+    },
+    createAppointmentEnvironmental(doctorId) {
+      // Insert into appointments table
+      db.collection("appointments")
+        .add({
+          doctorId: doctorId,
+          environmentLocation: this.location,
+          date: this.appointmentDate,
+          illness: this.illness.toLowerCase().split(","),
+          linkURL: this.linkURL,
+          linkPassword: this.linkPassword,
+          intervention: this.intervention.trim(),
+          notes: this.notes.trim(),
+        })
+        .then((docRef) => {
+          docRef;
+          this.$emit("toggle-default-view");
+        })
+        .catch((err) => console.log(err));
+    },
+    createAppointment(doctorId, patientId) {
+      if (this.healthType == "H") {
+        //If Human Health
+        // Insert into appointments table
+        db.collection("appointments")
+          .add({
+            doctorId: doctorId,
+            patientId: patientId,
+            illness: this.illness.toLowerCase().split(","),
+            date: this.appointmentDate,
+            time: this.appointmentTime,
+            linkURL: this.linkURL,
+            linkPassword: this.linkPassword,
+            notes: this.notes.trim(),
+          })
+          .then((docRef) => {
+            docRef;
+            this.$emit("toggle-default-view");
+          })
+          .catch((err) => console.log(err));
+      } else if (this.healthType == "A") {
+        //If Animal Health
+        // Insert into appointments table
+        db.collection("appointments")
+          .add({
+            doctorId: doctorId[0].id,
+            patientId: patientId[0].id,
+            illness: this.illness.toLowerCase().split(","),
+            animalCount: this.animalCount,
+            location: this.location.trim(),
+            date: this.appointmentDate,
+            time: this.appointmentTime,
+            linkURL: this.linkURL,
+            linkPassword: this.linkPassword,
+            notes: this.notes.trim(),
+          })
+          .then((docRef) => {
+            docRef;
+            this.$emit("toggle-default-view");
+          })
+          .catch((err) => console.log(err));
       }
     },
   },

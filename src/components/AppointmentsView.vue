@@ -71,7 +71,7 @@
                 >
                   <div
                     class="text-red-600 hover:text-red-900"
-                    @click="deleteAppointment(appointmentIndex)"
+                    @click="sendEmail(appointmentIndex)"
                   >Delete</div>
                 </td>
               </tr>
@@ -465,6 +465,41 @@ export default {
       );
       this.$router.push("/editappointment");
     },
+    sendEmail(appointmentIndex) {
+      if (this.healthType != "E") {
+        //Get patient's details
+        db.collection("users")
+          .where(
+            firebase.firestore.FieldPath.documentId(),
+            "==",
+            this.appointments[appointmentIndex].patientId
+          )
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const patientData = {
+                email: doc.data().email,
+              };
+
+              //Send Email
+              fetch(
+                `http://localhost:3000/appointmentdelete?names=${this.profileData.firstName}.${this.profileData.lastName}.${this.profileData.surname}&emails=${this.profileData.email}.${patientData.email}&time=${this.appointments[appointmentIndex].date}.${this.appointments[appointmentIndex].time}&linkurl=${this.appointments[appointmentIndex].linkURL}&linkpass=${this.appointments[appointmentIndex].linkPassword}`
+              )
+                .then((data) => data.json())
+                .then((res) => {
+                  res = JSON.parse(res);
+                  if (res.sent) {
+                    this.deleteAppointment(appointmentIndex);
+                  }
+                })
+                .catch((err) => console.log(err));
+            });
+          })
+          .catch((err) => console.log(err));
+      } else {
+        this.deleteAppointment(appointmentIndex);
+      }
+    },
     deleteAppointment(appointmentIndex) {
       const appointmentToBeDeleted = this.appointments[appointmentIndex];
       db.collection("appointments")
@@ -490,6 +525,10 @@ export default {
               id: doc.id,
               type: doc.data().type,
               healthType: doc.data().healthType,
+              firstName: doc.data().firstName,
+              surname: doc.data().surname,
+              lastName: doc.data().lastName,
+              email: doc.data().email,
             };
             this.profileData = data;
             this.isDoctor = this.profileData.type == "D";

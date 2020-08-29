@@ -118,7 +118,9 @@ export default {
             patientAddress: this.address,
             type: this.profileData.type,
           })
-          .then(function () {})
+          .then(function () {
+            this.$emit("toggle-default-view");
+          })
           .catch((err) => console.log(err));
       }
     },

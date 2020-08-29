@@ -40,12 +40,12 @@
           </select>
         </div>
         <div class="mb-4 mt-4 p-2" v-if="showHealth">
-          <div class="mb-2">Health</div>
+          <div class="mb-2">Category</div>
           <select class="mb-2" name="type" required v-model="health">
-            <option disabled>Choose type of health</option>
-            <option value="H">Human Health</option>
-            <option value="A">Animal Health</option>
-            <option value="E">Environmental Health</option>
+            <option disabled>Choose category</option>
+            <option value="H">Human</option>
+            <option value="A">Animal</option>
+            <option value="E">Environment</option>
           </select>
         </div>
         <div class="mb-4 mt-4 p-2">

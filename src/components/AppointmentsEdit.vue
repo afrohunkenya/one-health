@@ -2,7 +2,7 @@
   <div class="container max-w-xs p-8">
     <div class="text-2xl" v-if="healthType != 'E'">Edit Appointment</div>
     <div class="text-2xl" v-if="healthType == 'E'">Edit Inspection</div>
-    <form @submit.prevent="editAppointment">
+    <form @submit.prevent="sendEmail">
       <div class="mb-4 mt-4 p-2" v-if="healthType != 'E'">
         <div class="mb-2" v-if="healthType == 'H'">Patient First & Last Names</div>
         <div class="mb-2" v-if="healthType == 'A'">Owner's First & Last Names</div>
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
 import db from "./firebaseInit";
 
 export default {
@@ -91,6 +92,60 @@ export default {
     };
   },
   methods: {
+    sendEmail() {
+      if (this.healthType != "E") {
+        //Get doctor's details
+        db.collection("users")
+          .where(
+            firebase.firestore.FieldPath.documentId(),
+            "==",
+            this.savedEditAppointment.doctorId
+          )
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              const doctorData = {
+                firstName: doc.data().firstName,
+                surname: doc.data().surname,
+                lastName: doc.data().lastName,
+                email: doc.data().email,
+              };
+
+              //Get patient's details
+              db.collection("users")
+                .where(
+                  firebase.firestore.FieldPath.documentId(),
+                  "==",
+                  this.savedEditAppointment.patientId
+                )
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    const patientData = {
+                      email: doc.data().email,
+                    };
+
+                    //Send Email
+                    fetch(
+                      `http://localhost:3000/appointment?names=${doctorData.firstName}.${doctorData.lastName}.${doctorData.surname}&emails=${doctorData.email}.${patientData.email}&time=${this.appointmentDate}.${this.appointmentTime}&linkurl=${this.linkURL}&linkpass=${this.linkPassword}`
+                    )
+                      .then((data) => data.json())
+                      .then((res) => {
+                        res = JSON.parse(res);
+                        if (res.sent) {
+                          this.editAppointment();
+                        }
+                      })
+                      .catch((err) => console.log(err));
+                  });
+                })
+                .catch((err) => console.log(err));
+            });
+          });
+      } else {
+        this.editAppointment();
+      }
+    },
     editAppointment() {
       if (this.healthType == "E") {
         //If Environmental Health

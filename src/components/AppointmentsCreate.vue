@@ -64,9 +64,9 @@
           class="p-2 bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500 ml-3"
           type="submit"
         >Submit</button>
-        <router-link to="/dashboard">
+        <div @click="toggleDefaultView()">
           <div class="p-2">Cancel</div>
-        </router-link>
+        </div>
       </div>
     </form>
   </div>
@@ -104,6 +104,9 @@ export default {
     };
   },
   methods: {
+    toggleDefaultView() {
+      this.$emit("toggle-default-view");
+    },
     updateStats() {
       if (this.illnessConfirmed) {
         this.newStats = this.illness.split(",");

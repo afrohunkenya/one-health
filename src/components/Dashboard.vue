@@ -82,7 +82,7 @@
       <AppointmentsCreate @toggle-default-view="toggleDefaultView" v-if="showView == 2"></AppointmentsCreate>
       <PortalViewPersonal v-if="showView == 3"></PortalViewPersonal>
       <PortalCreate @toggle-default-view="toggleDefaultView" v-if="showView == 4"></PortalCreate>
-      <ProfileEdit v-if="showView == 5"></ProfileEdit>
+      <ProfileEdit @toggle-default-view="toggleDefaultView" v-if="showView == 5"></ProfileEdit>
     </div>
   </div>
 </template>

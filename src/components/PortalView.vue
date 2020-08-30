@@ -47,6 +47,7 @@ export default {
     this.savedViewData = localStorageData
       ? JSON.parse(localStorageData).savedViewData
       : {};
+    this.savedViewData.title = this.savedViewData.title.split("<br>").join(" ");
 
     var localStorageIsDoctor = localStorage.getItem("isDoctor");
     if (localStorageIsDoctor) {

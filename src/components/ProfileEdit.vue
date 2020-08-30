@@ -103,7 +103,8 @@ export default {
             username: this.username,
             doctorDept: this.dept,
           })
-          .then(function () {
+          .then((placeHolder) => {
+            placeHolder
             this.$emit("toggle-default-view");
           })
           .catch((err) => console.log(err));
@@ -121,7 +122,8 @@ export default {
             patientAddress: this.address,
             type: this.profileData.type,
           })
-          .then(function () {
+          .then((placeHolder) => {
+            placeHolder;
             this.$emit("toggle-default-view");
           })
           .catch((err) => console.log(err));

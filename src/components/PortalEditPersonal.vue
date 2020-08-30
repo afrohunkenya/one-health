@@ -33,7 +33,7 @@
             class="p-2 bg-green-600 rounded-md text-white font-medium tracking-wide hover:bg-green-500 ml-3 text-sm"
             type="submit"
           >Submit</button>
-          <router-link to="/">
+          <router-link to="/dashboard">
             <div class="p-2">Cancel</div>
           </router-link>
         </div>

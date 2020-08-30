@@ -140,6 +140,7 @@ export default {
             const data = {
               id: doc.id,
               email: doc.data().email,
+              password: doc.data().password,
               firstName: doc.data().firstName,
               lastName: doc.data().lastName,
               surname: doc.data().surname,

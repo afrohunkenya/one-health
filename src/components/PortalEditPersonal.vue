@@ -71,7 +71,8 @@ export default {
           firstName: this.savedEditData.firstName,
           lastName: this.savedEditData.lastName,
         })
-        .then(function () {
+        .then((placeHolder) => {
+          placeHolder;
           this.$router.push("/dashboard");
         })
         .catch((err) => console.log(err));

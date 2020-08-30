@@ -161,7 +161,8 @@ export default {
             intervention: this.intervention.trim(),
             notes: this.notes.trim(),
           })
-          .then(function () {
+          .then((placeHolder) => {
+            placeHolder;
             this.$router.push("/dashboard");
           })
           .catch((err) => console.log(err));
@@ -180,7 +181,8 @@ export default {
               linkPassword: this.linkPassword,
               notes: this.notes.trim(),
             })
-            .then(function () {
+            .then((placeHolder) => {
+              placeHolder;
               this.$router.push("/dashboard");
             })
             .catch((err) => console.log(err));
@@ -200,7 +202,8 @@ export default {
               linkPassword: this.linkPassword,
               notes: this.notes.trim(),
             })
-            .then(function () {
+            .then((placeHolder) => {
+              placeHolder;
               this.$router.push("/dashboard");
             })
             .catch((err) => console.log(err));

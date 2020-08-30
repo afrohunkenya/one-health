@@ -139,8 +139,8 @@ export default {
       firebase
         .auth()
         .signOut()
-        .then(
-          function () {
+        .then((placeHolder) => {
+            placeHolder;
             localStorage.removeItem("userEmail");
             this.$router.push("/");
           },

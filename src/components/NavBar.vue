@@ -36,17 +36,17 @@
         class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20"
       >
         <router-link
-          class="block px-4 py-2 text-sm text-black hover:bg-green-600"
+          class="block px-4 py-2 text-sm text-black hover:text-white hover:bg-green-600"
           v-if="showAuth"
           to="/login"
         >Log In</router-link>
         <router-link
-          class="block px-4 py-2 text-sm text-black hover:bg-green-600"
+          class="block px-4 py-2 text-sm text-black hover:text-white hover:bg-green-600"
           v-if="showAuth"
           to="/signup"
         >Sign Up</router-link>
         <router-link
-          class="block px-4 py-2 text-sm text-black hover:bg-green-600"
+          class="block px-4 py-2 text-sm text-black hover:text-white hover:bg-green-600"
           v-if="! showAuth"
           to="/dashboard"
         >Dashboard</router-link>

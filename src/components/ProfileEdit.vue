@@ -14,10 +14,6 @@
         <div class="mb-2">Phone Number</div>
         <input type="tel" autocomplete required v-model="phone" />
       </div>
-      <div class="mb-4 mt-4 p-2" v-if="isDoctor">
-        <div class="mb-2">Department</div>
-        <input type="text" minlength="2" maxlength="20" autocomplete required v-model="dept" />
-      </div>
       <div class="mb-4 mt-4 p-2">
         <div class="mb-2">First Name</div>
         <input type="text" minlength="2" maxlength="20" autocomplete required v-model="firstName" />
@@ -73,12 +69,11 @@ export default {
       this.$emit("toggle-default-view");
     },
     fillInput() {
-      if (this.profileData.doctorDept) {
-        this.dept = this.profileData.doctorDept;
-        this.isDoctor = true;
-      } else {
+      if (this.profileData.address) {
         this.address = this.profileData.address;
         this.isDoctor = false;
+      } else {
+        this.isDoctor = true;
       }
       this.email = this.profileData.email;
       this.firstName = this.profileData.firstName;
@@ -101,7 +96,8 @@ export default {
             surname: this.surname,
             phone: this.phone,
             username: this.username,
-            doctorDept: this.dept,
+            healthType: this.profileData.healthType,
+            type: this.profileData.type,
           })
           .then((placeHolder) => {
             placeHolder
@@ -149,7 +145,7 @@ export default {
               type: doc.data().type,
               phone: doc.data().phone,
               username: doc.data().username,
-              doctorDept: doc.data().doctorDept,
+              healthType: doc.data().healthType,
               patientAddress: doc.data().address,
             };
             this.profileData = data;

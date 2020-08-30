@@ -105,10 +105,7 @@ export default {
   },
   methods: {
     updateStats() {
-      this.illnessConfirmed = true;
       if (this.illnessConfirmed) {
-        this.illness = "typhoid";
-        this.appointmentDate = "2020-07-21";
         this.newStats = this.illness.split(",");
 
         Date.prototype.getWeekOfMonth = function () {

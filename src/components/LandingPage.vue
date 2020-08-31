@@ -1,11 +1,6 @@
 <template>
   <div>
     <NavBar />
-    <div class="p-8">
-      <div class="flex flex-row justify-center items-center">
-        <img class="max-w-sm" src="../../public/img/logo.png" alt="Bold Team Logo" />
-      </div>
-    </div>
     <div class="mx-8">
       <div class="my-4">
         <div class="text-2xl font-semibold text-green-700">Problem</div>

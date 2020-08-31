@@ -2,47 +2,30 @@
   <div>
     <NavBar />
     <div class="mx-8">
-      <div class="my-4">
+      <div class="my-8">
         <div class="text-2xl font-semibold text-green-700">Problem</div>
         <p>
-          A doctor who works in a busy public hospital with few medical personnel is exhausted.
-          <br />He needs to attend to his immunocompromised patients within a short period of time
-          <br />Because the patients are suffering from zoonotic and diseases resulting from environmental pollution and delays can lead to serious health complications
-        </p>
-        <div class="mt-2 font-bold text-green-600">User</div>
-        <p>Doctor</p>
-        <div class="mt-2 font-bold text-green-600">Need</div>
-        <p>To communicate with his immunocompromised patients prior to visits and attends to immunocompromised patients within a short period of time</p>
-        <div class="mt-2 font-bold text-green-600">Insight</div>
-        <p>
-          The doctor does not want a delayed service delivery to the immunocompromised patients. He would like to attend to his patients within a short period of time,
-          However most of these immunocompromised patients are suffering from zoonotic and waterborne diseases.
+          Doctors who work in busy public hospitals with few medical personnel are exhausted.
+          <br />They need to attend to their immunocompromised patients within a short period of time
+          <br />Because the patients are suffering from zoonotic, warterborne and diseases resulting from environmental pollution and delays can lead to serious health complications
         </p>
       </div>
-      <div class="my-4">
-        <div class="text-2xl font-semibold text-green-700">Solutions</div>
-        <div class="mt-2 font-bold text-green-600">A</div>
+      <div class="my-8">
+        <div class="text-2xl font-semibold text-green-700">Solution</div>
+        <div class="mt-4 font-bold text-green-600">INFORMATION SHARING</div>
         <p>
-          Create a communication channel between the different departments in the healthcare system.Involving the medical personnel, Public health workers to veterinary.
-          <br />The veterinary will get information from medical side in case of a rise or emergence of certain zoonotic diseases such as brucellosis and pinpoint which area has highest number of cases.
+          The portal is a communication channel between different departments in the healthcare system involving the medical personnel, public health workers and veterinary.
+          <br />It enables doctors to consult between each another and report on unfamiliar/unusual/frequent cases in the hospital
         </p>
-        <div class="mt-2 font-bold text-green-600">B</div>
+        <div class="mt-4 font-bold text-green-600">ONLINE APPOINTMENTS</div>
         <p>
-          Data analysis will be done through the system and with the outcomes, a plan can be set to address the situation. Thus this will ease disease surveillance.
-          <br />After interventions has been made , data will be recorded in the app stating why certain disease occurred and it's causes.
-          <br />The doctor will be able to access this information and inform his patients of the necessary precautions he/she should take in order to avoid reoccurrence of the same disease after treatment.
+          Doctors can schedule/book online meetings prior to hospital visits. This is only done for non-serious conditions. It also allows patients to seek advice from the doctor without physical proximity to them.
+          <br />It reduces the doctors' workload, congestion in the hospital and physical proximity during disease outbreaks like COVID-19 or Ebola
         </p>
-        <div class="mt-2 font-bold text-green-600">C</div>
+        <div class="mt-4 font-bold text-green-600">ILLNESS STATISTICS</div>
         <p>
-          The app will also allow patients to schedule/ book meetings prior to visit.
-          <br />Through this, the doctor will choose which specific disease to handle on specific day and time.
-          <br />This will reduce congestion in hospital and also doctors workload will be reduced since he/she will able to do specific number of patients.
-          The app will also allow the patients to seek for advice from doctor without necessarily coming in contact with them.
-        </p>
-        <div class="mt-2 font-bold text-green-600">D</div>
-        <p>
-          The medical officers will be able to interact with patients despite the distance and those with complications can be identified and brought in for further interventions.
-          <br />The system through its online aspect, is able to reduce contact between people. This is vital in place of a disease outbreaks such as the COVID-19 or Ebola
+          Using the appointments, data analysis is done on the illnesses and charts are drawn. The charts show top illnesses and emerging illnesses
+          <br />It eases disease surveillance. Through this doctors can make necessary interventions and inform their patients on precautionary measures
         </p>
       </div>
     </div>

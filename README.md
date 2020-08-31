@@ -1,24 +1,13 @@
-# one-health
+# One Health
 
-## Project setup
-```
-npm install
-```
+![Bold Team Logo](https://github.com/d3vkk/one-health/blob/master/main/public/img/logo.png)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+One Health App Development Challenge 2020. By Bold Team
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Recognising the connection between the health of people, animals and the environment
 
-### Lints and fixes files
-```
-npm run lint
-```
+[https://onehealth.netlify.app](https://onehealth.netlify.app)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[More information on One Health (USAID, AFROHUN Kenya)](https://afrohun.org/)
+
+© 2020 Bold Team • Under MIT License

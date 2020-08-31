@@ -1,6 +1,6 @@
 # One Health
 
-![Bold Team Logo](https://github.com/d3vkk/one-health/blob/master/main/public/img/logo.png)
+![Bold Team Logo](https://github.com/d3vkk/one-health/blob/master/public/img/logo.png)
 
 One Health App Development Challenge 2020. By Bold Team
 

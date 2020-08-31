@@ -10,16 +10,16 @@
         />
       </section>
       <section class="flex flex-col justify-center text-sm w-11/12 p-4 rounded-lg">
-        <article class="mb-4">
+        <article class="mb-2">
           <div>
             <a
               class="font-semibold text-xl"
               href="https://afrohun.org/"
-            >The USAID One Health Workforce - Next Generation (OHW-NG) project.&nbsp;In collaboration with AFROHUN Kenya</a>
+            >For the One Health App Development Challenge 2020</a>
           </div>
         </article>
-        <p>For the One Health App Development Challenge 2020</p>
-        <p>&copy; 2020 Team Bold &bull; MIT License</p>
+        <p>The USAID One Health Workforce - Next Generation (OHW-NG) project.&nbsp;In collaboration with AFROHUN Kenya</p>
+        <p class="mt-4">&copy; 2020 Team Bold &bull; MIT License</p>
       </section>
     </footer>
   </div>

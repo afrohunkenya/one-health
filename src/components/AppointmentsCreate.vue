@@ -288,7 +288,6 @@ export default {
                         .then((data) => data.json())
                         .then((res) => {
                           res = JSON.parse(res);
-                          console.log("editAppointment -> res", res);
                           if (res.sent) {
                             this.createAppointment(
                               doctorData.id,

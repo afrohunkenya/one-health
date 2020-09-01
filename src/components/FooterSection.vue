@@ -19,6 +19,9 @@
           </div>
         </article>
         <p>The USAID One Health Workforce - Next Generation (OHW-NG) project.&nbsp;In collaboration with AFROHUN Kenya</p>
+        <div class="mt-2">
+          <a href="https://github.com/d3vkk/one-health" class="font-semibold underline">View On GitHub</a>
+        </div>
         <p class="mt-4">&copy; 2020 Team Bold &bull; MIT License</p>
       </section>
     </footer>

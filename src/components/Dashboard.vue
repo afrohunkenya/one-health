@@ -35,9 +35,6 @@
           </div>
         </div>
         <div class="flex items-center mt-4 py-2 px-6 text-white">
-          <router-link class="mx-4" to="/portal">Portal</router-link>
-        </div>
-        <div class="flex items-center mt-4 py-2 px-6 text-white">
           <router-link class="mx-4" to="/stats">Stats</router-link>
         </div>
         <div class="flex items-center mt-4 py-2 px-6 text-white">

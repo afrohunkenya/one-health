@@ -1,7 +1,6 @@
 <template>
   <nav class="flex flex-row shadow-md p-2 justify-around bg-green-700 text-white">
     <router-link class="uppercase" to="/">One Health</router-link>
-    <router-link to="/portal">Portal</router-link>
     <router-link to="/stats">Stats</router-link>
     <div class="relative">
       <button @click="contactOpen = !contactOpen">Contact</button>
